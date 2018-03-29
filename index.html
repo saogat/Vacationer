@@ -7,6 +7,7 @@
 
     <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
     <link rel="stylesheet" href="assets/css/style.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700i,800,900" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -14,8 +15,61 @@
     <title>Vacationer</title>
 </head>
 <body>
-
+        <!--Nav bar-->
+        <nav class="nav-extended">
+                <div class="nav-wrapper">
+                    <a href="#" class="brand-logo">Vacationer</a>
+                    <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="placeholder.html">Your Account</a></li>
+                    </ul>
+                </div>
+                <div class="nav-content">
+                    <ul class="tabs tabs-transparent">
+                    <li class="tab"><a href=placeholder.html>Mexico City</a></li>
+                    <li class="tab"><a href=placeholder.html>Paris</a></li>
+                    <li class="tab"><a href=placeholder.html>Tokyo</a></li>
+                    </ul>
+                </div>
+                </nav>
     
+        <!--Main page-->
+        <div class="container">
+            <div class="row">
+                <div class="col s3">
+                    <p>Monday, June 4</p>
+                    <p>Tuesday, June 5</p>
+                    <p>Wednesday, June 6</p>
+                    <p>Thursday, June 7</p>
+                </div>
+                <div class="col s9">
+                    <p>To do</p>
+                    <p>To do</p>
+                    <p>To do</p>
+                    <p>To do</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    <h1>Div to hold Weather API</h1>
+                </div>
+                <div class="col s6">
+                    <h1>Div to hold Google Map API</h1>
+                </div>
+            </div>
+        </div>   
+        
+        <!--Footer-->
+        <footer class="page-footer">
+            <div class="footer-copyright">
+                <div class="container">
+                © 2018 Copyright SSSG
+                <a class="grey-text text-lighten-4 right" href="#!">Home</a>
+                </div>
+            </div>
+            </footer>
+    
+    <!--BEGIN JAVASCRIPT-->
     <script src="assets/javascript/app.js"></script>
 </body>
 </html>
