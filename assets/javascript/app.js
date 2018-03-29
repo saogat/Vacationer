@@ -31,19 +31,29 @@ function Activity (location, date, description, completed) {
     this.completed = completed
 }
 
-//Create function that will clear entry fields upon clicking submit
-function clear() {
-    $("#date").empty();
-    $("#activity").empty();
-    $("#conf-number").empty();
-  }
+//Create click event function for city input bar
+$("#vacation-adder").on("click", function(event) {
+    event.preventDefault();
 
-//Create click event function for entry form
+    var newCity = $("#city-input").val().trim();
+    console.log("City: " + newCity);
+
+    var cityButton = $("<li>");
+    cityButton.attr("class", "tab");
+    cityButton.text(newCity)
+    $(".tabs-transparent").append(cityButton);
+
+});
+
+//Create click event function for activity entry form
 $("#add-button").on("click", function(event){
+    event.preventDefault();
 
-var dateEntry = $("#date").val().trim();
-var activityEntry = $("#activity").val().trim();
+    var dateEntry = $("#date").val().trim();
+    var activityEntry = $("#activity").val().trim();
 
+    console.log("Date: " + dateEntry);
+    console.log("Activity: " + activityEntry);
 
 })
 
