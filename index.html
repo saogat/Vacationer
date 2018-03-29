@@ -26,38 +26,52 @@
                 </div>
                 <div class="nav-content">
                     <ul class="tabs tabs-transparent">
-                    <li class="tab"><a href=placeholder.html>Mexico City</a></li>
-                    <li class="tab"><a href=placeholder.html>Paris</a></li>
-                    <li class="tab"><a href=placeholder.html>Tokyo</a></li>
+                    <li class="tab"><a href=placeholder.html>Add Vacation</a></li>
                     </ul>
                 </div>
                 </nav>
     
         <!--Main page-->
-        <div class="container">
             <div class="row">
-                <div class="col s3">
-                    <p>Monday, June 4</p>
-                    <p>Tuesday, June 5</p>
-                    <p>Wednesday, June 6</p>
-                    <p>Thursday, June 7</p>
+                <!--Add activities input box-->
+                <div class="col s2" id="panel">
+                    <form>
+                        <p>Add to your itinerary</p> 
+                        <input type="text" id="date" placeholder="Date">
+                        <input type="text" id="activity" placeholder="Activity">
+                        <input type="text" id="conf-number" placeholder="Confirmation # (Optional)">
+                        <button id="add-button">Add</button>
+                    </form>
                 </div>
-                <div class="col s9" id="to-dos">
-                    <p>To do</p>
-                    <p>To do</p>
-                    <p>To do</p>
-                    <p>To do</p>
+                <div class=container>
+                    <!--Dates list-->
+                    <div class="col s2" id="days">
+                            <div id="date-header">
+                                <p>Date</p>
+                            </div>
+                            <div id="date-buttons"></div>
+                        </div>
+                    </div>
+                    <!--To do list-->
+                    <div class="col s8" id="to-do-panel">
+                        <div id="activity-header">
+                            <p>Activity</p>
+                        </div>
+                        <div id="to-do-list"></div>
                 </div>
             </div>
+            
             <div class="row">
+                <!--Weather API-->
                 <div class="col s6">
-                    <h1>Div to hold Weather API</h1>
+                    <h3>Div to hold Weather API</h3>
                 </div>
+                <!--Maps API-->
                 <div class="col s6">
-                    <h1>Div to hold Google Map API</h1>
+                    <h3>Div to hold Google Map API</h3>
                 </div>
             </div>
-        </div>   
+        </div>
         
         <!--Footer-->
         <footer class="page-footer">
