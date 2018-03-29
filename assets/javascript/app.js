@@ -1,4 +1,5 @@
 
+var geoLocation;
 //Global variable object
 function Vacationer (name, password, vacations) {
     this.vacations = vacations;
@@ -44,9 +45,7 @@ var dateEntry = $("#date").val().trim();
 var activityEntry = $("#activity").val().trim();
 
 
-});
-
-// WEATHER API
+})
 
 $(".tab").on("click", function (event) {
     event.preventDefault();
@@ -128,13 +127,114 @@ getWeather(shannon.vacations[0]);
 console.log(shannon.vacations);
 
 //get map from Google API
-function getMap() {
-    $.ajax({
-        url: url,
-        method: 'GET',
-    }).done(function (response) {
+function DisplayMap (city) {
+    this.geocoding = function(){
+        //whatever the name is from the button that has been clicked
+       var geocodingRequest =  "https://maps.googleapis.com/maps/api/geocode/json?address=" + city +"&key=AIzaSyD6ro8ednBUBnAeYhcjizzp3NvEqFCScNs";
+        $.ajax({
+            url: geocodingRequest,
+            method: 'GET',
+        }).then(function (response) {
+        console.log(response)
+           geoLocation = response.results[0].geometry.location;
+           console.log(geoLocation)
+        });
+    }
+  
+    // this.mapDisplay = function(){
+    //     function initMap() {
+    //         var map = new google.maps.Map(document.getElementById('map'), {
+    //           mapTypeControl: false,
+    //           center: geoLocation,
+    //           zoom: 13
+    //         });
+    
+    //         new AutocompleteDirectionsHandler(map);
+    //       }
+    
+         
+    //       function AutocompleteDirectionsHandler(map) {
+    //         this.map = map;
+    //         this.originPlaceId = null;
+    //         this.destinationPlaceId = null;
+    //         this.travelMode = 'WALKING';
+    //         var originInput = document.getElementById('origin-input');
+    //         var destinationInput = document.getElementById('destination-input');
+    //         var modeSelector = document.getElementById('mode-selector');
+    //         this.directionsService = new google.maps.DirectionsService;
+    //         this.directionsDisplay = new google.maps.DirectionsRenderer;
+    //         this.directionsDisplay.setMap(map);
+    
+    //         var originAutocomplete = new google.maps.places.Autocomplete(
+    //             originInput, {placeIdOnly: true});
+    //         var destinationAutocomplete = new google.maps.places.Autocomplete(
+    //             destinationInput, {placeIdOnly: true});
+    
+    //         this.setupClickListener('changemode-walking', 'WALKING');
+    //         this.setupClickListener('changemode-transit', 'TRANSIT');
+    //         this.setupClickListener('changemode-driving', 'DRIVING');
+    
+    //         this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
+    //         this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
+    
+    //         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
+    //         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
+    //         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
+    //       }
+    
+    //       // Sets a listener on a radio button to change the filter type on Places
+    //       // Autocomplete.
+    //       AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) {
+    //         var radioButton = document.getElementById(id);
+    //         var me = this;
+    //         radioButton.addEventListener('click', function() {
+    //           me.travelMode = mode;
+    //           me.route();
+    //         });
+    //       };
+    
+    //       AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(autocomplete, mode) {
+    //         var me = this;
+    //         autocomplete.bindTo('bounds', this.map);
+    //         autocomplete.addListener('place_changed', function() {
+    //           var place = autocomplete.getPlace();
+    //           if (!place.place_id) {
+    //             window.alert("Please select an option from the dropdown list.");
+    //             return;
+    //           }
+    //           if (mode === 'ORIG') {
+    //             me.originPlaceId = place.place_id;
+    //           } else {
+    //             me.destinationPlaceId = place.place_id;
+    //           }
+    //           me.route();
+    //         });
+    
+    //       }
+    //     }
+    
+    //       AutocompleteDirectionsHandler.prototype.route = function() {
+    //         if (!this.originPlaceId || !this.destinationPlaceId) {
+    //           return;
+    //         }
+    //         var me = this;
+    
+    //         this.directionsService.route({
+    //           origin: {'placeId': this.originPlaceId},
+    //           destination: {'placeId': this.destinationPlaceId},
+    //           travelMode: this.travelMode
+    //         }, function(response, status) {
+    //           if (status === 'OK') {
+    //             me.directionsDisplay.setDirections(response);
+    //           } else {
+    //             window.alert('Directions request failed due to ' + status);
+    //           }
+    //         });
+    //       };
+    
+    // }
 
-    });
+}
 
-};
+var London = new DisplayMap("London").geocoding();
 
