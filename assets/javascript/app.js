@@ -1,5 +1,6 @@
 var geoLocation;
 var map;
+var newCity;
 
 
 // Initialize Firebase
@@ -84,13 +85,23 @@ function clearAdd() {
 $("#vacation-adder").on("click", function (event) {
     event.preventDefault();
 
-    var newCity = $("#city-input").val().trim();
+    newCity = $("#city-input").val().trim();
     console.log("City: " + newCity);
 
-    var cityButton = $("<li>");
-    cityButton.attr("class", "tab");
-    cityButton.text(newCity)
-    $(".tabs-transparent").append(cityButton);
+    var cityList = $("<li>");
+    var cityLink = $("<a>");
+    cityList.attr("class", "tab");
+    cityLink.attr("id", newCity)
+    cityLink.text(newCity)
+    $(cityList).append(cityLink)
+    $(".tabs-transparent").append(cityList);
+
+    //Create click event for newly created buttons
+
+    $("#" + newCity).on("click", function (event){
+        console.log("Clicked: " + newCity);
+
+    })
 
 });
 
@@ -237,7 +248,7 @@ function geoCoding(city) {
 }
 
 $(document).on("click", ".tab", function () {
-    geoCoding("London");
+    geoCoding(newCity);
 });
 
 function mapSetCenter() {
