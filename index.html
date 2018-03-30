@@ -6,11 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700i,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+
     <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
-    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700i,800,900" rel="stylesheet">
+   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
@@ -33,6 +35,10 @@
         <div class="nav-content">
             <ul class="tabs tabs-transparent">
                 <li class="tab">
+                    <a >Mexico City</a>
+                </li>
+                <li class="tab">
+                    <a >London</a>
                     <a href=placeholder.html>Mexico City</a>
                 </li>
                 <li class="tab">
@@ -71,14 +77,15 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" >
         <!--Weather API-->
         <div class="col s6">
             <h3>Div to hold Weather API</h3>
         </div>
         <!--Maps API-->
-        <div class="col s6">
-            <h3>Div to hold Google Map API</h3>
+        <div class="col s6" id= "googleMapParentDiv">
+                <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+                <div id="map"></div>
         </div>
     </div>
     </div>
@@ -95,6 +102,8 @@
 
     <!--BEGIN JAVASCRIPT-->
     <script src="assets/javascript/app.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6ro8ednBUBnAeYhcjizzp3NvEqFCScNs&libraries=places&callback=initAutocomplete"
+    async defer></script>
 </body>
 
 </html>
