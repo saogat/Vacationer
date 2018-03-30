@@ -65,10 +65,10 @@ table {
 }
 .nav-extended, li {
 	color: white;
-	text
+
 }
 .nav-content {
-	background-color: rgba(0, 0, 0, 0.5); !important;
+	background-color: rgba(0, 0, 0, 0.5);
 }
 .brand-logo {
 	float: left;
