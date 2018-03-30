@@ -6,26 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    <!-- Google client id -->
+    <meta name="google-signin-client_id" content="202337803549-enkda8c2e1dvko8mjmhgajnetuqcal5p.apps.googleusercontent.com">
+
+    <!-- Materialize -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+
+    <!-- Google fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700i,800,900" rel="stylesheet">
+
+    <!-- Our Stylesheet -->
     <link rel="stylesheet" href="assets/css/style.css" type="text/css">
 
+    <!-- jquery  -->
     <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
-   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!-- Firebase -->
+
+    <!-- Firebase API-->
     <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+
+    <!-- Google API -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    
+
     <title>Vacationer</title>
 </head>
 
 <body>
 
 
-<!--Main page-->
-<!--		<div class="row">-->
-<!--Add activities input box-->
-<!--
+    <!--Main page-->
+    <!--		<div class="row">-->
+    <!--Add activities input box-->
+    <!--
                 <div class="col s2" id="panel" class="z-depth-3">
                     <form>
                         <p>Add to your itinerary</p> 
@@ -36,8 +50,8 @@
                 </div>
                 <div class=container>
 -->
-<!--Dates list-->
-<!--
+    <!--Dates list-->
+    <!--
                     <div class="col s2" id="days">
 					  	<div id="date-header">
 							<p>Date</p>
@@ -46,8 +60,8 @@
   					</div>
 				</div>
 -->
-<!--To do list-->
-<!--
+    <!--To do list-->
+    <!--
 				<div class="col s8" id="to-do-panel">
                         <div id="activity-header">
                             <p>Activity</p>
@@ -58,13 +72,16 @@
     <!--Nav bar-->
     <nav class="nav-extended">
         <div class="nav-wrapper">
-            <a href="#" class="brand-logo"><img src="assets/images/vacationer_logo_wht.gif" width="175" height="auto" alt=""/></a>
+            <a href="#" class="brand-logo">
+                <img src="assets/images/vacationer_logo_wht.gif" width="175" height="auto" alt="" />
+            </a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li>
-                    <a href="placeholder.html">Your Account</a>
-              	</li>
-         	</ul>
-      	</div>
+                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                    <!-- <a href="placeholder.html">Your Account</a> -->
+                </li>
+            </ul>
+        </div>
         <input type="text" class="center" id="city-input" placeholder="Where do you want to go?">
         <button id="vacation-adder" class="center">Add Vacation</button>
         <div class="nav-content">
@@ -79,44 +96,44 @@
             </ul>
         </div>
     </nav>
-<!--Main page-->
-   <div class="row">
-       <!--Add activities input box-->
-       <div class="col s2" id="panel">
-           <form>
-               <p>Add to your itinerary</p>
-               <input type="date" class="datepicker" id="date" placeholder="Date" required>
-               <input type="text" id="activity" placeholder="Activity" required>
-               <button id="add-button">Add</button>
-           </form>
-       </div>
-       <div class=container>
-           <!--Dates list-->
-           <div class="col s2" id="days">
-               <div id="date-header">
-                   <p>Date</p>
-               </div>
-               <div id="date-buttons"></div>
-           </div>
-       </div>
-       <!--To do list-->
-       <div class="col s8" id="to-do-panel">
-           <div id="activity-header">
-               <p>Activity</p>
-           </div>
-           <div id="to-do-list"></div>
-       </div>
-   </div>
-   
-    <div class="row" >
+    <!--Main page-->
+    <div class="row">
+        <!--Add activities input box-->
+        <div class="col s2" id="panel">
+            <form>
+                <p>Add to your itinerary</p>
+                <input type="date" class="datepicker" id="date" placeholder="Date" required>
+                <input type="text" id="activity" placeholder="Activity" required>
+                <button id="add-button">Add</button>
+            </form>
+        </div>
+        <div class=container>
+            <!--Dates list-->
+            <div class="col s2" id="days">
+                <div id="date-header">
+                    <p>Date</p>
+                </div>
+                <div id="date-buttons"></div>
+            </div>
+        </div>
+        <!--To do list-->
+        <div class="col s8" id="to-do-panel">
+            <div id="activity-header">
+                <p>Activity</p>
+            </div>
+            <div id="to-do-list"></div>
+        </div>
+    </div>
+
+    <div class="row">
         <!--Weather API-->
         <div class="col s6">
             <h3>Div to hold Weather API</h3>
         </div>
         <!--Maps API-->
-        <div class="col s6" id= "googleMapParentDiv">
-                <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-                <div id="map"></div>
+        <div class="col s6" id="googleMapParentDiv">
+            <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+            <div id="map"></div>
         </div>
     </div>
     </div>
@@ -136,6 +153,7 @@
     <script src="assets/javascript/app.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6ro8ednBUBnAeYhcjizzp3NvEqFCScNs&libraries=places&callback=initAutocomplete"
     async defer></script>
+   
 </body>
 
-</html>    
+</html>
