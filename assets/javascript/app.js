@@ -214,6 +214,8 @@ function retrieveFromDatabase() {
 
 }
 
+retrieveFromDatabase();
+
 
 console.log(user.databaseObject());
 console.log(user);
