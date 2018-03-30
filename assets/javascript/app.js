@@ -96,13 +96,9 @@ $("#vacation-adder").on("click", function (event) {
     $(cityList).append(cityLink)
     $(".tabs-transparent").append(cityList);
 
-    //Create click event for newly created buttons
-
+    //Create click event for dynamically created buttons
     $("#" + newCity).on("click", function (event){
-        console.log("Clicked: " + newCity);
-
-    })
-
+        user.selectedVacation = newCity;
 });
 
 //show activity list for the selected vacation 
