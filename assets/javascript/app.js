@@ -1,6 +1,21 @@
 var geoLocation;
 var map;
 
+
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyCoa07mzxgyQ4VxmxNoMv4Q-MEhE3xBcW4",
+    authDomain: "vacationer-d8bc1.firebaseapp.com",
+    databaseURL: "https://vacationer-d8bc1.firebaseio.com",
+    projectId: "vacationer-d8bc1",
+    storageBucket: "vacationer-d8bc1.appspot.com",
+    messagingSenderId: "202337803549"
+};
+firebase.initializeApp(config);
+
+// Get a reference to the database service
+var database = firebase.database();
+
 //Global variable object
 function Vacationer(name, password, vacations, selectedVacation) {
     this.vacations = vacations;
@@ -10,6 +25,15 @@ function Vacationer(name, password, vacations, selectedVacation) {
         this.vacations.push(vacation);
     };
     this.selectedVacation = selectedVacation;
+    this.databaseObject = function () {
+        var tempUser = {};
+        tempUser.name = this.name;
+        tempUser.password = this.password;
+        tempUser.vacations = $.map(this.vacations, function (vacation) {
+            return vacation.databaseObject();
+        });
+        return tempUser;
+    }
 }
 
 //Create object contructor for vacation
@@ -23,15 +47,31 @@ function Vacation(name, location, weatherData) {
                 this.deleteActivity = function (activity, index) {
                     this.activities.splice(index, 1);
                 }
+        },
+        this.databaseObject = function () {
+            var tempVacation = {};
+            tempVacation.location = this.location;
+            tempVacation.activities = $.map(this.activities, function (activity) {
+                return activity.databaseObject();
+            });
+            return tempVacation;
         }
 };
 
 //Create object constructor for activity
 function Activity(location, date, description, completed) {
-    this.location = location;
-    this.date = date;
-    this.description = description;
-    this.completed = completed
+    this.location = location,
+        this.date = date,
+        this.description = description,
+        this.completed = completed,
+        this.databaseObject = function () {
+            tempActivity = {};
+            tempActivity.location = this.location;
+            tempActivity.date = this.date;
+            tempActivity.description = this.description;
+            tempActivity.completed = this.completed;
+            return tempActivity;
+        }
 }
 
 //Create function that will clear entry fields upon clicking submit
@@ -143,8 +183,16 @@ var user = new Vacationer("John Doe", "", []);
 var parisVacation = new Vacation("Paris", "Paris, France", []);
 user.addVacation(parisVacation);
 user.selectedVacation = parisVacation;
-
 getWeather(user.vacations[0]);
+
+function saveToDatabase() {
+    database.ref().set(
+        user.databaseObject()
+    );
+}
+
+console.log(user.databaseObject());
+console.log(user);
 
 
 //Create click event function for entry form
@@ -157,7 +205,9 @@ $("#add-button").on("click", function (event) {
         user.selectedVacation.addActivity(activity);
         showActivities(user.selectedVacation.activities);
         clearAdd();
+        saveToDatabase();
     }
+
 })
 
 $("#to-do-list").on("click", ".checkbox", function () {
@@ -167,6 +217,7 @@ $("#to-do-list").on("click", ".checkbox", function () {
     showActivities(user.selectedVacation.activities);
     console.log(user.selectedVacation.activities);
     console.log(user);
+    saveToDatabase();
 })
 
 
