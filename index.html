@@ -20,6 +20,62 @@
 </head>
 
 <body>
+
+<!--Nav bar-->
+		<nav class="nav-extended">
+				<div class="nav-wrapper">
+				<img class="brand-logo" src="assets/images/vacationer_logo_wht.gif" width="150" height="auto" alt="Vacationer Logo"/>
+					<ul id="nav-mobile" class="right hide-on-med-and-down">
+						<li><a href="placeholder.html">Your Account</a></li>
+					</ul>
+				</div>
+  					<input type="text" class="center" id="city-input" placeholder="Where do you want to go?">
+        <!--Nav bar-->
+        <nav class="nav-extended">
+                <div class="nav-wrapper">
+                    <a href="#" class="brand-logo">Vacationer</a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="placeholder.html">Your Account</a></li>
+                    </ul>
+                </div>
+                <input type="text" class="center" id="city-input" placeholder="Where do you want to go?">
+                <button id="vacation-adder" class="center">Add Vacation</button>
+
+                <div class="nav-content">
+                    <ul class="tabs tabs-transparent">
+					  <li class="tab"><a href=placeholder.html>Mexico City</a></li>
+					  <li class="tab"><a href=placeholder.html>London</a></li>
+                    </ul>
+                </div>
+		</nav>
+    
+<!--Main page-->
+		<div class="row">
+<!--Add activities input box-->
+                <div class="col s2" id="panel" class="z-depth-3">
+                    <form>
+                        <p>Add to your itinerary</p> 
+                        <input type="text" id="date" placeholder="Date" required>
+                        <input type="text" id="activity" placeholder="Activity" required>
+                        <button id="add-button">Add</button>
+                    </form>
+                </div>
+                <div class=container>
+<!--Dates list-->
+                    <div class="col s2" id="days">
+					  	<div id="date-header">
+							<p>Date</p>
+						</div>
+						<div id="date-buttons"></div>
+  					</div>
+				</div>
+<!--To do list-->
+				<div class="col s8" id="to-do-panel">
+                        <div id="activity-header">
+                            <p>Activity</p>
+                        </div>
+                        <div id="to-do-list"></div>
+
     <!--Nav bar-->
     <nav class="nav-extended">
         <div class="nav-wrapper">
@@ -64,9 +120,37 @@
             <div class="col s2" id="days">
                 <div id="date-header">
                     <p>Date</p>
+
                 </div>
                 <div id="date-buttons"></div>
             </div>
+            
+            <div class="row">
+				<section id="api-pics">
+					<div class="center-align">
+<!--Weather API-->
+						<div class="col s6">
+						  <img src="assets/images/temp_weather.jpg" width="80%" height="auto" alt="Temporary Weather Image"/>
+						</div>
+<!--Maps API-->
+						<div class="col s6">
+							<img src="assets/images/temp_map.jpg" width="80%" height="auto" alt="Temporary Google Map Image"/> 
+						</div>
+					</div>
+				</section>
+            </div>
+        
+
+			<footer class="page-footer">
+				<div class="footer-copyright">
+					<div class="container">
+					© 2018 Copyright SSSG
+					<a class="grey-text text-lighten-4 right" href="#!">Home</a>
+					</div>
+				</div>
+			</footer>
+    
+<!--BEGIN JAVASCRIPT-->
         </div>
         <!--To do list-->
         <div class="col s8" id="to-do-panel">
@@ -101,9 +185,10 @@
     </footer>
 
     <!--BEGIN JAVASCRIPT-->
+
     <script src="assets/javascript/app.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6ro8ednBUBnAeYhcjizzp3NvEqFCScNs&libraries=places&callback=initAutocomplete"
     async defer></script>
 </body>
 
-</html>
+</html>    
