@@ -191,6 +191,30 @@ function saveToDatabase() {
     );
 }
 
+function retrieveFromDatabase() {
+    database.ref().on("value", function(snapshot) {
+
+
+      // Print the initial data to the console.
+      console.log(snapshot.val());
+
+    //   // Log the value of the various properties
+    //   console.log(snapshot.val().name);
+    //   console.log(snapshot.val().age);
+    //   console.log(snapshot.val().phone);
+
+      // Change the HTML
+    //   $("#displayed-data").text(snapshot.val().name + " | " + snapshot.val().age + " | " + snapshot.val().phone);
+
+      // If any errors are experienced, log them to console.
+    }, function(errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    });
+
+
+}
+
+
 console.log(user.databaseObject());
 console.log(user);
 
