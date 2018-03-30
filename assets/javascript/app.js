@@ -1,30 +1,32 @@
-
 var geoLocation;
+
 //Global variable object
-function Vacationer (name, password, vacations) {
+function Vacationer(name, password, vacations, selectedVacation) {
     this.vacations = vacations;
     this.name = name;
     this.password = password;
-    this.addVacation = function (vacation){
+    this.addVacation = function (vacation) {
         this.vacations.push(vacation);
-    }
+    };
+    this.selectedVacation = selectedVacation;
 }
 
-//Push activities to vacation
-
 //Create object contructor for vacation
-function Vacation (name, location, weatherData) {
-    this.name = name,
-    this.location = location,
-    this.activities = [],
-    this.weatherData = weatherData,
-    this.addActivity = function (activity){
-        this.activities.push(activity);
-    }
+function Vacation(name, location, weatherData) {
+        this.name = name,
+        this.location = location,
+        this.activities = [],
+        this.weatherData = weatherData,
+        this.addActivity = function (activity) {
+            this.activities.push(activity),
+            this.deleteActivity = function (activity, index) {
+                this.activities.splice(index, 1);
+            }
+        }
 };
 
 //Create object constructor for activity
-function Activity (location, date, description, completed) {
+function Activity(location, date, description, completed) {
     this.location = location;
     this.date = date;
     this.description = description;
@@ -36,16 +38,8 @@ function clear() {
     $("#date").empty();
     $("#activity").empty();
     $("#conf-number").empty();
-  }
+}
 
-//Create click event function for entry form
-$("#add-button").on("click", function(event){
-
-var dateEntry = $("#date").val().trim();
-var activityEntry = $("#activity").val().trim();
-
-
-})
 
 $(".tab").on("click", function (event) {
     event.preventDefault();
@@ -57,20 +51,43 @@ $(".tab").on("click", function (event) {
 
 });
 
-//add vacation tab
-function addVacation() {
+//show activity list for the selected vacation 
+function showActivities(activities) {
+    var dateButtons = $("#date-buttons");
+    var toDoDiv = $("#to-do-list");
+    dateButtons.empty();
+    toDoDiv.empty();
 
-}
+    var i = 0;
+    activities.forEach(function (activity) {
 
-//add activity to the vacation 
-function addActivity() {
+        //show activity date
+        var dateDiv = $("<div>");
 
-    $("#to-dos").append($("<p>").text("test"));
+        dateDiv.append($("<p>").text(activity.date));
+        dateButtons.append(dateDiv);
+        console.log(activity.date);
 
-    // ("<p>Checkin into hotel</p>");
-    console.log("adding activity");
+        //show activity description
+        var activityDiv = $("<div>");
+        activityDiv.attr("id", "item-" + i);
+        activityDiv.append($("<p>").text(activity.description));
+        toDoDiv.append(activityDiv);
+        console.log(activity.description);
 
+        //add delete button
+        var deleteButton = $("<button>");
+        deleteButton.attr("data-to-do", i);
+        deleteButton.addClass("checkbox");
+        deleteButton.append("✓");
+        activityDiv.prepend(deleteButton);
+       
+    });
 };
+
+function deleteActivity (user, activityNumber){
+    user.selectedVacation.deleteActivity(activityNumber);
+}
 
 function Weather(location, temperature, min, max, humidity, description) {
     this.location = location;
@@ -81,7 +98,7 @@ function Weather(location, temperature, min, max, humidity, description) {
     this.description = description;
 }
 
- //get weather from Weather API
+//get weather from Weather API
 var getWeather = function (vacation) {
     var url = "http://api.openweathermap.org/data/2.5/forecast?";
     url += "APPID=e059918f7e48a37962d40029f4db4443";
@@ -92,17 +109,17 @@ var getWeather = function (vacation) {
         url: url,
         method: 'GET',
     }).done(function (response) {
-        
-        for(var i=0; i<5; i++){
-            var eachWeatherData = response.list[i+3];
+
+        for (var i = 0; i < 5; i++) {
+            var eachWeatherData = response.list[i + 3];
             var weather = new Weather(
-                vacation.location, 
-                eachWeatherData.main.temp, 
+                vacation.location,
+                eachWeatherData.main.temp,
                 eachWeatherData.main.temp_min,
                 eachWeatherData.main.temp_max,
                 eachWeatherData.main.humidity,
                 eachWeatherData.weather[0].description);
-                vacation.weatherData.push(weather);
+            vacation.weatherData.push(weather);
         }
 
         // response.list.forEach(function(eachWeatherData){
@@ -118,29 +135,53 @@ var getWeather = function (vacation) {
     });
 };
 
-var shannon = new Vacationer("Shannon", "", []);
+var user = new Vacationer("John Doe", "", []);
 var parisVacation = new Vacation("Paris", "Paris, France", []);
-shannon.addVacation(parisVacation);
+user.addVacation(parisVacation);
+user.selectedVacation = parisVacation;
+
+getWeather(user.vacations[0]);
 
 
-getWeather(shannon.vacations[0]);
-console.log(shannon.vacations);
+//Create click event function for entry form
+$("#add-button").on("click", function (event) {
+    event.preventDefault();
+    var dateEntry = $("#date").val().trim();
+    var activityEntry = $("#activity").val().trim();
+    console.log(dateEntry, activityEntry);
+    var activity = new Activity(user.selectedVacation.location, dateEntry, activityEntry, false);
+    user.selectedVacation.addActivity(activity);
+    showActivities(user.selectedVacation.activities);
+    console.log(user.selectedVacation.activities);
+    console.log(user);
+})
+
+$("#to-do-list").on("click", ".checkbox", function () {
+    var toDoNumber = $(this).attr("data-to-do");
+    deleteActivity(user, toDoNumber);
+    $("#item-" + toDoNumber).remove();
+   showActivities(user.selectedVacation.activities);
+    console.log(user.selectedVacation.activities);
+    console.log(user);
+})
+
 
 //get map from Google API
-function DisplayMap (city) {
-    this.geocoding = function(){
+function DisplayMap(city) {
+    this.geocoding = function () {
         //whatever the name is from the button that has been clicked
-       var geocodingRequest =  "https://maps.googleapis.com/maps/api/geocode/json?address=" + city +"&key=AIzaSyD6ro8ednBUBnAeYhcjizzp3NvEqFCScNs";
+        var geocodingRequest = "https://maps.googleapis.com/maps/api/geocode/json?address=" + city + "&key=AIzaSyD6ro8ednBUBnAeYhcjizzp3NvEqFCScNs";
         $.ajax({
             url: geocodingRequest,
             method: 'GET',
         }).then(function (response) {
-        console.log(response)
-           geoLocation = response.results[0].geometry.location;
-           console.log(geoLocation)
+            console.log(response)
+            geoLocation = response.results[0].geometry.location;
+            console.log(geoLocation)
         });
     }
-  
+
+
     // this.mapDisplay = function(){
     //     function initMap() {
     //         var map = new google.maps.Map(document.getElementById('map'), {
@@ -148,11 +189,11 @@ function DisplayMap (city) {
     //           center: geoLocation,
     //           zoom: 13
     //         });
-    
+
     //         new AutocompleteDirectionsHandler(map);
     //       }
-    
-         
+
+
     //       function AutocompleteDirectionsHandler(map) {
     //         this.map = map;
     //         this.originPlaceId = null;
@@ -164,24 +205,24 @@ function DisplayMap (city) {
     //         this.directionsService = new google.maps.DirectionsService;
     //         this.directionsDisplay = new google.maps.DirectionsRenderer;
     //         this.directionsDisplay.setMap(map);
-    
+
     //         var originAutocomplete = new google.maps.places.Autocomplete(
     //             originInput, {placeIdOnly: true});
     //         var destinationAutocomplete = new google.maps.places.Autocomplete(
     //             destinationInput, {placeIdOnly: true});
-    
+
     //         this.setupClickListener('changemode-walking', 'WALKING');
     //         this.setupClickListener('changemode-transit', 'TRANSIT');
     //         this.setupClickListener('changemode-driving', 'DRIVING');
-    
+
     //         this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
     //         this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
-    
+
     //         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
     //         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
     //         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
     //       }
-    
+
     //       // Sets a listener on a radio button to change the filter type on Places
     //       // Autocomplete.
     //       AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) {
@@ -192,7 +233,7 @@ function DisplayMap (city) {
     //           me.route();
     //         });
     //       };
-    
+
     //       AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(autocomplete, mode) {
     //         var me = this;
     //         autocomplete.bindTo('bounds', this.map);
@@ -209,16 +250,16 @@ function DisplayMap (city) {
     //           }
     //           me.route();
     //         });
-    
+
     //       }
     //     }
-    
+
     //       AutocompleteDirectionsHandler.prototype.route = function() {
     //         if (!this.originPlaceId || !this.destinationPlaceId) {
     //           return;
     //         }
     //         var me = this;
-    
+
     //         this.directionsService.route({
     //           origin: {'placeId': this.originPlaceId},
     //           destination: {'placeId': this.destinationPlaceId},
@@ -231,10 +272,9 @@ function DisplayMap (city) {
     //           }
     //         });
     //       };
-    
+
     // }
 
 }
 
 var London = new DisplayMap("London").geocoding();
-
