@@ -82,8 +82,18 @@ function clearAdd() {
 }
 
 //Create click event function for city input bar
-$("#vacation-adder").on("click", function (event) {
+// Execute a function when the user releases a key on the keyboard
+$("#city-input").on("keyup", function(event) {
+    // Cancel the default action, if needed
     event.preventDefault();
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+      // Trigger the button element with a click
+      $("#vacation-adder").click();
+    
+//Click handler for physical button (Can delete when enter key works)
+//   $("#vacation-adder").on("click", function (event) {
+//     event.preventDefault();
 
     newCity = $("#city-input").val().trim();
     console.log("City: " + newCity);
@@ -95,6 +105,9 @@ $("#vacation-adder").on("click", function (event) {
     cityLink.text(newCity)
     $(cityList).append(cityLink)
     $(".tabs-transparent").append(cityList);
+    }
+});
+
 
     //Create click event for dynamically created buttons
     $("#" + newCity).on("click", function (event){
