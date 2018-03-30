@@ -13,15 +13,15 @@ function Vacationer(name, password, vacations, selectedVacation) {
 
 //Create object contructor for vacation
 function Vacation(name, location, weatherData) {
-        this.name = name,
+    this.name = name,
         this.location = location,
         this.activities = [],
         this.weatherData = weatherData,
         this.addActivity = function (activity) {
             this.activities.push(activity),
-            this.deleteActivity = function (activity, index) {
-                this.activities.splice(index, 1);
-            }
+                this.deleteActivity = function (activity, index) {
+                    this.activities.splice(index, 1);
+                }
         }
 };
 
@@ -34,14 +34,13 @@ function Activity(location, date, description, completed) {
 }
 
 //Create function that will clear entry fields upon clicking submit
-function clear() {
-    $("#date").empty();
-    $("#activity").empty();
-    $("#conf-number").empty();
+function clearAdd() {
+    $("#date").val("");
+    $("#activity").val("");
 }
 
 //Create click event function for city input bar
-$("#vacation-adder").on("click", function(event) {
+$("#vacation-adder").on("click", function (event) {
     event.preventDefault();
 
     var newCity = $("#city-input").val().trim();
@@ -74,7 +73,8 @@ function showActivities(activities) {
         //show activity description
         var activityDiv = $("<div>");
         activityDiv.attr("id", "item-" + i);
-        activityDiv.append($("<p>").text(activity.description));
+        activityP = $("<p>").text(" " + activity.description);
+        activityDiv.append(activityP);
         toDoDiv.append(activityDiv);
         console.log(activity.description);
 
@@ -83,12 +83,12 @@ function showActivities(activities) {
         deleteButton.attr("data-to-do", i);
         deleteButton.addClass("checkbox");
         deleteButton.append("✓");
-        activityDiv.prepend(deleteButton);
-       
+        activityP.prepend(deleteButton);
+
     });
 };
 
-function deleteActivity (user, activityNumber){
+function deleteActivity(user, activityNumber) {
     user.selectedVacation.deleteActivity(activityNumber);
 }
 
@@ -151,19 +151,19 @@ $("#add-button").on("click", function (event) {
     event.preventDefault();
     var dateEntry = $("#date").val().trim();
     var activityEntry = $("#activity").val().trim();
-    console.log(dateEntry, activityEntry);
-    var activity = new Activity(user.selectedVacation.location, dateEntry, activityEntry, false);
-    user.selectedVacation.addActivity(activity);
-    showActivities(user.selectedVacation.activities);
-    console.log(user.selectedVacation.activities);
-    console.log(user);
+    if ((dateEntry != "") && (activityEntry != "")) {
+        var activity = new Activity(user.selectedVacation.location, dateEntry, activityEntry, false);
+        user.selectedVacation.addActivity(activity);
+        showActivities(user.selectedVacation.activities);
+        clearAdd();
+    }
 })
 
 $("#to-do-list").on("click", ".checkbox", function () {
     var toDoNumber = $(this).attr("data-to-do");
     deleteActivity(user, toDoNumber);
     $("#item-" + toDoNumber).remove();
-   showActivities(user.selectedVacation.activities);
+    showActivities(user.selectedVacation.activities);
     console.log(user.selectedVacation.activities);
     console.log(user);
 })
