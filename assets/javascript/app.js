@@ -198,6 +198,32 @@ function saveToDatabase() {
     );
 }
 
+function retrieveFromDatabase() {
+    database.ref().on("value", function(snapshot) {
+
+
+      // Print the initial data to the console.
+      console.log(snapshot.val());
+
+    //   // Log the value of the various properties
+    //   console.log(snapshot.val().name);
+    //   console.log(snapshot.val().age);
+    //   console.log(snapshot.val().phone);
+
+      // Change the HTML
+    //   $("#displayed-data").text(snapshot.val().name + " | " + snapshot.val().age + " | " + snapshot.val().phone);
+
+      // If any errors are experienced, log them to console.
+    }, function(errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    });
+
+
+}
+
+retrieveFromDatabase();
+
+
 console.log(user.databaseObject());
 console.log(user);
 
@@ -228,6 +254,15 @@ $("#to-do-list").on("click", ".checkbox", function () {
 })
 
 
+function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+  }
+
+
 //get map from Google API
 
 function geoCoding(city) {
@@ -246,6 +281,7 @@ function geoCoding(city) {
 $(document).on("click", ".tab", function () {
     geoCoding(newCity);
 });
+
 
 function mapSetCenter() {
 
