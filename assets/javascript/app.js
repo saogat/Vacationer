@@ -40,14 +40,17 @@ function clear() {
     $("#conf-number").empty();
 }
 
-
-$(".tab").on("click", function (event) {
+//Create click event function for city input bar
+$("#vacation-adder").on("click", function(event) {
     event.preventDefault();
 
-    console.log("clicked on vacation city tab");
-    // add info about vacation city - mexico city
+    var newCity = $("#city-input").val().trim();
+    console.log("City: " + newCity);
 
-    addActivity();
+    var cityButton = $("<li>");
+    cityButton.attr("class", "tab");
+    cityButton.text(newCity)
+    $(".tabs-transparent").append(cityButton);
 
 });
 
