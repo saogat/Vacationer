@@ -1,14 +1,22 @@
 
-
-//Create vacations array to push new vacations
+//Global variable object
+function Vacationer (name, password, vacations) {
+    this.vacations = vacations;
+    this.name = name;
+    this.password = password;
+    this.addVacation = function (vacation){
+        this.vacations.push(vacation);
+    }
+}
 
 //Push activities to vacation
 
 //Create object contructor for vacation
-function Vacation (name, location) {
+function Vacation (name, location, weatherData) {
     this.name = name,
     this.location = location,
     this.activities = [],
+    this.weatherData = weatherData,
     this.addActivity = function (activity){
         this.activities.push(activity);
     }
@@ -22,31 +30,33 @@ function Activity (location, date, description, completed) {
     this.completed = completed
 }
 
-//Placeholder for new vacation name and location
-var vacation = new Vacation("Paris", "Paris");
+//Create click event function for city input bar
+$("#vacation-adder").on("click", function(event) {
+    event.preventDefault();
 
-//Console log vacation
-console.log(vacation);
+    var newCity = $("#city-input").val().trim();
+    console.log("City: " + newCity);
 
-//Create function that will clear entry fields upon clicking submit
-// function clear() {
-//     $("#date").empty();
-//     $("#activity").empty();
-//     $("#conf-number").empty();
-//   }
+    var cityButton = $("<li>");
+    cityButton.attr("class", "tab");
+    cityButton.text(newCity)
+    $(".tabs-transparent").append(cityButton);
 
-// //Create click event function for entry form
-// $("#add-button").on("click", function(event){
+});
 
-// var dateEntry = $("#date").val().trim();
-// var activityEntry = $("#activity").val().trim();
+//Create click event function for activity entry form
+$("#add-button").on("click", function(event){
+    event.preventDefault();
 
+    var dateEntry = $("#date").val().trim();
+    var activityEntry = $("#activity").val().trim();
 
+    console.log("Date: " + dateEntry);
+    console.log("Activity: " + activityEntry);
 
+});
 
-// });
-
-var weatherData = [];
+// WEATHER API
 
 $(".tab").on("click", function (event) {
     event.preventDefault();
@@ -73,7 +83,6 @@ function addActivity() {
 
 };
 
-
 function Weather(location, temperature, min, max, humidity, description) {
     this.location = location;
     this.temperature = temperature;
@@ -84,11 +93,11 @@ function Weather(location, temperature, min, max, humidity, description) {
 }
 
  //get weather from Weather API
-var getWeather = function (location) {
+var getWeather = function (vacation) {
     var url = "http://api.openweathermap.org/data/2.5/forecast?";
     url += "APPID=e059918f7e48a37962d40029f4db4443";
     url += "&q=";
-    url += location;
+    url += vacation.location;
     url += "&units=imperial";
     $.ajax({
         url: url,
@@ -98,13 +107,13 @@ var getWeather = function (location) {
         for(var i=0; i<5; i++){
             var eachWeatherData = response.list[i+3];
             var weather = new Weather(
-                location, 
+                vacation.location, 
                 eachWeatherData.main.temp, 
                 eachWeatherData.main.temp_min,
                 eachWeatherData.main.temp_max,
                 eachWeatherData.main.humidity,
                 eachWeatherData.weather[0].description);
-                weatherData.push(weather);
+                vacation.weatherData.push(weather);
         }
 
         // response.list.forEach(function(eachWeatherData){
@@ -120,8 +129,13 @@ var getWeather = function (location) {
     });
 };
 
-getWeather("London,UK");
-console.log(weatherData);
+var shannon = new Vacationer("Shannon", "", []);
+var parisVacation = new Vacation("Paris", "Paris, France", []);
+shannon.addVacation(parisVacation);
+
+
+getWeather(shannon.vacations[0]);
+console.log(shannon.vacations);
 
 //get map from Google API
 function getMap() {
