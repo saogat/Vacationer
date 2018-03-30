@@ -48,6 +48,16 @@ table {
 	border-spacing: 0;
 }
 */
+/*
+.valign-wrapper {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+*/
 
 #panel{
     background-color: lightgoldenrodyellow;
@@ -64,8 +74,7 @@ table {
 	color: white;
 }
 .nav-extended, li {
-	color: white;
-
+	color: white;	
 }
 .nav-content {
 	background-color: rgba(0, 0, 0, 0.5);
@@ -77,8 +86,22 @@ table {
 	margin-top: 1%;
 }
 .center, #city-input {
+	height: 1.6em;
 	border: none;
 	color: white;
+	display: -webkit-flex;
+	  display: -ms-flexbox;
+	  display: flex;
+	  -webkit-align-items: center;
+		  -ms-flex-align: center;
+			  align-items: center;
+	margin-top: 4%;
+}
+#city-input {
+	background-color: white;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
 }
 #api-pics {
 	margin-left: auto;
@@ -92,6 +115,12 @@ table {
 	background-color: #414141;
 	font-size: .7em;	
 }
+
+
+
+
+
+
 
 /*********************************** google map styling ******************************************/
    /* Always set the map height explicitly to define the size of the div
