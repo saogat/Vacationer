@@ -184,6 +184,7 @@ var getWeather = function (vacation) {
                 eachWeatherData.main.humidity,
                 eachWeatherData.weather[0].description);
             vacation.weatherData.push(weather);
+			console.log(vacation.weatherData);
         }
 
         // response.list.forEach(function(eachWeatherData){
