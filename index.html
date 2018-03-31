@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="assets/css/style.css" type="text/css">
 
     <!-- jquery  -->
-    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -30,20 +30,24 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     
 
+
     <title>Vacationer</title>
 </head>
 
 <body>
 
-<!--Nav bar-->
+    <!--Nav bar-->
     <nav class="nav-extended">
         <div class="nav-wrapper">
-            <a href="#" class="brand-logo"><img src="assets/images/vacationer_logo_wht.gif" width="145" height="auto" alt=""/></a>
+            <a href="#" class="brand-logo">
+                <img src="assets/images/vacationer_logo_wht.gif" width="145" height="auto" alt="" />
+            </a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-			<ul class="collapsible popout">
-				<a href="placeholder.html" class="collapsible popout">
-                    <img class="profile"  src="assets/images/google.gif" width="40px" height="auto" alt=""/>
-			    </a>
+                <li>
+                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                    <div class="user"></div>
+                    <a href="placeholder.html" class="profile"><img src="assets/images/google_sign_in.jpg" alt="Google Sign In Placeholder" width="135px" height="auto" class="google"/></a>
+              	</li>
          	</ul>
       	</div>
 <!--New Cites INPUT Goes Here-->	
@@ -57,12 +61,6 @@
 				<div class="col s12">
 				  <div class="nav-content">
 						<ul class="tabs tabs-transparent">
-							<li class="tab">
-								<a >Mexico City</a>
-							</li>
-							<li class="tab">
-								<a >London</a>
-							</li>
 						</ul>
         			</div>
 				</div>
@@ -123,9 +121,8 @@
     <!--BEGIN JAVASCRIPT-->
 
     <script src="assets/javascript/app.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6ro8ednBUBnAeYhcjizzp3NvEqFCScNs&libraries=places&callback=initAutocomplete"
-    async defer></script>
-   
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6ro8ednBUBnAeYhcjizzp3NvEqFCScNs&libraries=places&callback=initAutocomplete" async defer></script>
+
 </body>
 
 </html>

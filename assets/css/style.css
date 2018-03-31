@@ -1,68 +1,89 @@
 
+
 #panel{
     background-color: lightgoldenrodyellow;
     padding-top:20px;
     padding-bottom:30px;
-}
 
 .nav-extended {
-	background-image:url(../images/beach2.jpg);
-	background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-	text-shadow: 0 1px 3px rgba(1,0,0,5);
-	color: white;
+  background-image: url(../images/beach2.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-shadow: 0 1px 3px rgba(1, 0, 0, 5);
+  color: white;
 }
-.nav-extended, li {
-	color: white;	
+
+.nav-extended,
+li {
+  color: white;
 }
+
 .nav-content {
-	background-color: rgba(0, 0, 0, 0.5);
-	left: -10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  /*	left: -11px;*/
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
+
 .brand-logo {
-	float: left;
-	margin-left: 2%;
-	text-shadow: 0 1px 3px rgba(1, 0, 0, 9);
-	margin-top: 1%;
+  float: left;
+  margin-left: 2%;
+  text-shadow: 0 1px 3px rgba(1, 0, 0, 9);
+  margin-top: 1%;
 }
-.center, #city-input {
-	height: 1.6em;
-	border: none;
-	color: black;
-	display: -webkit-flex;
-	  display: -ms-flexbox;
-	  display: flex;
-	  -webkit-align-items: center;
-		  -ms-flex-align: center;
-			  align-items: center;
-	margin-top: 4%;
-}
+
+.center,
 #city-input {
-	background-color: white;
-	width: 30%;
-	margin-left: auto;
-	margin-right: auto;
+  height: 1.6em;
+  border: none;
+  color: black;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-top: 4%;
 }
+
+#city-input {
+  background-color: white;
+  width: 30%;
+  margin-left: auto;
+  margin-right: auto;
+  color: black;
+}
+
 #api-pics {
-	margin-left: auto;
-	margin-right: auto;
-	
+  margin-left: auto;
+  margin-right: auto;
 }
+
 .footer {
-	background-color: #414141;
+  background-color: #414141;
 }
+
 .page-footer {
-	background-color: #414141;
-	font-size: .7em;	
+  background-color: #414141;
+  font-size: .7em;
 }
+
 .profile {
 	margin-top: 10px;
 	margin-right: 10px;
 }
 
+/*********************************** google map styling ******************************************/
 
+/* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
 
+#map {
+  height: 100%;
+  width: 100%;
+}
 
 
 
