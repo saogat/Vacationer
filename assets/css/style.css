@@ -1,3 +1,4 @@
+
 #panel{
     background-color: lightgoldenrodyellow;
     padding-top:20px;
@@ -17,10 +18,7 @@
 }
 .nav-content {
 	background-color: rgba(0, 0, 0, 0.5);
-/*	left: -11px;*/
-	width: 100%;
-	margin-left: auto;
-	margin-right: auto;
+	left: -10px;
 }
 .brand-logo {
 	float: left;
@@ -59,12 +57,11 @@
 	font-size: .7em;	
 }
 .profile {
-	width: auto;
-	height: auto;
-}
-.google {
 	margin-top: 10px;
+	margin-right: 10px;
 }
+
+
 
 
 
@@ -156,7 +153,3 @@
 
     /*********************************** google map styling ******************************************/
 
-.profile {
-}
-.google {
-}

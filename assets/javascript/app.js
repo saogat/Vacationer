@@ -383,5 +383,10 @@ function initAutocomplete() {
     });
 }
 
-
-
+$('.button-collapse').sideNav({
+      menuWidth: 300,
+      closeOnClick: true,
+      edge: 'right', // <--- CHECK THIS OUT
+    }
+  );
+  $('.collapsible').collapsible();
