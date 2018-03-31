@@ -140,14 +140,6 @@ $("#city-input").on("keyup", function (event) {
     }
 });
 
-
-//Create click event for dynamically created buttons
-// $("#" + newCity).on("click", function (event) {
-//     user.selectedVacation = newCity;
-//     console.log("city clicked" + user);
-// });
-
-
 //show activity list for the selected vacation 
 function showActivities(activities) {
     var dateButtons = $("#date-buttons");
@@ -197,7 +189,7 @@ function Weather(location, temperature, min, max, humidity, description) {
 //get weather from Weather API
 var getWeather = function (vacation) {
     if(typeof vacation == "object"){
-    var url = "http://api.openweathermap.org/data/2.5/forecast?";
+    var url = "https://api.openweathermap.org/data/2.5/forecast?";
     url += "APPID=e059918f7e48a37962d40029f4db4443";
     url += "&q=";
     url += vacation.location;
@@ -219,7 +211,7 @@ var getWeather = function (vacation) {
             weatherData.push(weather);
         };
         vacation.weatherData = weatherData;
-    });}
+    });
 };
 
 function saveToDatabase() {
@@ -297,7 +289,9 @@ $(".tabs").on("click", "a", function (event) {
     event.preventDefault();
     var city = $(this).text();
     geoCoding(city);
-    user.selectedVacation = user.vacations.find(function(each){return each.location == city});
+    user.selectedVacation = user.vacations.find(function (each) {
+        return each.location == city
+    });
     showActivities(user.selectedVacation.activities);
     getWeather(user.selectedVacation);
 });
