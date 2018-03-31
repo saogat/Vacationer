@@ -188,31 +188,32 @@ function Weather(location, temperature, min, max, humidity, description) {
 
 //get weather from Weather API
 var getWeather = function (vacation) {
-    if(typeof vacation == "object"){
-    var url = "https://api.openweathermap.org/data/2.5/forecast?";
-    url += "APPID=e059918f7e48a37962d40029f4db4443";
-    url += "&q=";
-    url += vacation.location;
-    url += "&units=imperial";
-    $.ajax({
-        url: url,
-        method: 'GET',
-    }).done(function (response) {
-        var weatherData = [];
-        for (var i = 0; i < 5; i++) {
-            var eachWeatherData = response.list[i + 3];
-            var weather = new Weather(
-                vacation.location,
-                eachWeatherData.main.temp,
-                eachWeatherData.main.temp_min,
-                eachWeatherData.main.temp_max,
-                eachWeatherData.main.humidity,
-                eachWeatherData.weather[0].description);
-            weatherData.push(weather);
-        };
-        vacation.weatherData = weatherData;
-    });
-};
+    if (typeof vacation == "object") {
+        var url = "https://api.openweathermap.org/data/2.5/forecast?";
+        url += "APPID=e059918f7e48a37962d40029f4db4443";
+        url += "&q=";
+        url += vacation.location;
+        url += "&units=imperial";
+        $.ajax({
+            url: url,
+            method: 'GET',
+        }).done(function (response) {
+            var weatherData = [];
+            for (var i = 0; i < 5; i++) {
+                var eachWeatherData = response.list[i + 3];
+                var weather = new Weather(
+                    vacation.location,
+                    eachWeatherData.main.temp,
+                    eachWeatherData.main.temp_min,
+                    eachWeatherData.main.temp_max,
+                    eachWeatherData.main.humidity,
+                    eachWeatherData.weather[0].description);
+                weatherData.push(weather);
+            };
+            vacation.weatherData = weatherData;
+        });
+    }
+}
 
 function saveToDatabase() {
     database.ref().set(
