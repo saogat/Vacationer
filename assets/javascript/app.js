@@ -213,9 +213,26 @@ var getWeather = function (vacation) {
                 eachWeatherData.main.temp_max,
                 eachWeatherData.main.humidity,
                 eachWeatherData.weather[0].description);
+<<<<<<< HEAD
             weatherData.push(weather);
         };
         vacation.weatherData = weatherData;
+=======
+            vacation.weatherData.push(weather);
+			console.log(vacation.weatherData);
+        }
+
+        // response.list.forEach(function(eachWeatherData){
+        //     var weather = new Weather(
+        //         location, 
+        //         eachWeatherData.main.temp, 
+        //         eachWeatherData.main.temp_min,
+        //         eachWeatherData.main.temp_max,
+        //         eachWeatherData.main.humidity,
+        //         eachWeatherData.weather[0].description);
+        //         weatherData.push(weather);
+        // });
+>>>>>>> 683698479f91af3daaf2c8043f3d149016e8af13
     });
 };
 
