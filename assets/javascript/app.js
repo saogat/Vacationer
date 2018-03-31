@@ -75,7 +75,28 @@ function Activity(location, date, description, completed) {
         }
 }
 
-//Create function that will clear entry fields upon clicking submit
+//new Vacationer with name guest
+var user = new Vacationer("guest", "", []);
+
+//Google signon
+function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    var userDiv = $(".user");
+    var userImage = $("<img>").attr("href", profile.getImageUrl());
+    var userName = $("<p>").text(profile.getName());
+    userDiv.append(userImage);
+    userDiv.append(userName);
+
+    //set name on Vacationer
+    user.name = profile.getName();
+}
+
+
+//Function to clear entry fields upon clicking submit
 function clearAdd() {
     $("#date").val("");
     $("#activity").val("");
@@ -83,36 +104,46 @@ function clearAdd() {
 
 //Create click event function for city input bar
 // Execute a function when the user releases a key on the keyboard
-$("#city-input").on("keyup", function(event) {
+$("#city-input").on("keyup", function (event) {
     // Cancel the default action, if needed
     event.preventDefault();
+
     // Number 13 is the "Enter" key on the keyboard
     if (event.keyCode === 13) {
-      // Trigger the button element with a click
-      $("#vacation-adder").click();
-    
-//Click handler for physical button (Can delete when enter key works)
-//   $("#vacation-adder").on("click", function (event) {
-//     event.preventDefault();
+        // Trigger the button element with a click
+        $("#vacation-adder").click();
 
-    newCity = $("#city-input").val().trim();
-    console.log("City: " + newCity);
+        //Click handler for physical button (Can delete when enter key works)
+        //   $("#vacation-adder").on("click", function (event) {
+        //     event.preventDefault();
 
-    var cityList = $("<li>");
-    var cityLink = $("<a>");
-    cityList.attr("class", "tab");
-    cityLink.attr("id", newCity)
-    cityLink.text(newCity)
-    $(cityList).append(cityLink)
-    $(".tabs-transparent").append(cityList);
+        var cityInput = $("#city-input");
+        newCity = cityInput.val().trim();
+        var cityList = $("<li>");
+        var cityLink = $("<a>");
+        cityList.addClass("tab");
+        cityLink.attr("id", newCity);
+        cityLink.text(newCity);
+        $(cityList).append(cityLink);
+        $(".tabs").append(cityList);
+
+        var vacation = new Vacation(newCity, newCity, []);
+        user.addVacation(vacation);
+        user.selectedVacation = vacation;
+
+        //clear city-input
+        cityInput.val("");
+
     }
 });
 
 
-    //Create click event for dynamically created buttons
-    $("#" + newCity).on("click", function (event){
-        user.selectedVacation = newCity;
-});
+//Create click event for dynamically created buttons
+// $("#" + newCity).on("click", function (event) {
+//     user.selectedVacation = newCity;
+//     console.log("city clicked" + user);
+// });
+
 
 //show activity list for the selected vacation 
 function showActivities(activities) {
@@ -129,7 +160,6 @@ function showActivities(activities) {
 
         dateDiv.append($("<p>").text(activity.date));
         dateButtons.append(dateDiv);
-        console.log(activity.date);
 
         //show activity description
         var activityDiv = $("<div>");
@@ -137,7 +167,6 @@ function showActivities(activities) {
         activityP = $("<p>").text(" " + activity.description);
         activityDiv.append(activityP);
         toDoDiv.append(activityDiv);
-        console.log(activity.description);
 
         //add delete button
         var deleteButton = $("<button>");
@@ -174,6 +203,7 @@ var getWeather = function (vacation) {
         method: 'GET',
     }).done(function (response) {
 
+        var weatherData = [];
         for (var i = 0; i < 5; i++) {
             var eachWeatherData = response.list[i + 3];
             var weather = new Weather(
@@ -183,27 +213,11 @@ var getWeather = function (vacation) {
                 eachWeatherData.main.temp_max,
                 eachWeatherData.main.humidity,
                 eachWeatherData.weather[0].description);
-            vacation.weatherData.push(weather);
-        }
-
-        // response.list.forEach(function(eachWeatherData){
-        //     var weather = new Weather(
-        //         location, 
-        //         eachWeatherData.main.temp, 
-        //         eachWeatherData.main.temp_min,
-        //         eachWeatherData.main.temp_max,
-        //         eachWeatherData.main.humidity,
-        //         eachWeatherData.weather[0].description);
-        //         weatherData.push(weather);
-        // });
+            weatherData.push(weather);
+        };
+        vacation.weatherData = weatherData;
     });
 };
-
-var user = new Vacationer("John Doe", "", []);
-var parisVacation = new Vacation("Paris", "Paris, France", []);
-user.addVacation(parisVacation);
-user.selectedVacation = parisVacation;
-getWeather(user.vacations[0]);
 
 function saveToDatabase() {
     database.ref().set(
@@ -212,36 +226,32 @@ function saveToDatabase() {
 }
 
 function retrieveFromDatabase() {
-    database.ref().on("value", function(snapshot) {
+    database.ref().on("value", function (snapshot) {
 
+        // Print the initial data to the console.
+        console.log(snapshot.val());
 
-      // Print the initial data to the console.
-      console.log(snapshot.val());
+        //   // Log the value of the various properties
+        //   console.log(snapshot.val().name);
+        //   console.log(snapshot.val().age);
+        //   console.log(snapshot.val().phone);
 
-    //   // Log the value of the various properties
-    //   console.log(snapshot.val().name);
-    //   console.log(snapshot.val().age);
-    //   console.log(snapshot.val().phone);
+        // Change the HTML
+        //   $("#displayed-data").text(snapshot.val().name + " | " + snapshot.val().age + " | " + snapshot.val().phone);
 
-      // Change the HTML
-    //   $("#displayed-data").text(snapshot.val().name + " | " + snapshot.val().age + " | " + snapshot.val().phone);
-
-      // If any errors are experienced, log them to console.
-    }, function(errorObject) {
-      console.log("The read failed: " + errorObject.code);
+        // If any errors are experienced, log them to console.
+    }, function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
     });
-
-
 }
 
-retrieveFromDatabase();
-
+// retrieveFromDatabase();
 
 console.log(user.databaseObject());
 console.log(user);
 
 
-//Create click event function for entry form
+//Create click event function for activity entry form
 $("#add-button").on("click", function (event) {
     event.preventDefault();
     var dateEntry = $("#date").val().trim();
@@ -253,10 +263,11 @@ $("#add-button").on("click", function (event) {
         clearAdd();
         saveToDatabase();
     }
-
 })
 
-$("#to-do-list").on("click", ".checkbox", function () {
+//delete activity
+$("#to-do-list").on("click", ".checkbox", function (event) {
+    event.preventDefault();
     var toDoNumber = $(this).attr("data-to-do");
     deleteActivity(user, toDoNumber);
     $("#item-" + toDoNumber).remove();
@@ -266,18 +277,7 @@ $("#to-do-list").on("click", ".checkbox", function () {
     saveToDatabase();
 })
 
-
-function onSignIn(googleUser) {
-    var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-  }
-
-
 //get map from Google API
-
 function geoCoding(city) {
     //whatever the name is from the button that has been clicked
     var geocodingRequest = "https://maps.googleapis.com/maps/api/geocode/json?address=" + city + "&key=AIzaSyD6ro8ednBUBnAeYhcjizzp3NvEqFCScNs";
@@ -291,8 +291,14 @@ function geoCoding(city) {
     });
 }
 
-$(document).on("click", ".tab", function () {
-    geoCoding(newCity);
+//select a vacation city
+$(".tabs").on("click", "a", function (event) {
+    event.preventDefault();
+    var city = $(this).text();
+    geoCoding(city);
+    user.selectedVacation = user.vacations.find(function(each){return each.location == city});
+    showActivities(user.selectedVacation.activities);
+    getWeather(user.selectedVacation);
 });
 
 
@@ -317,7 +323,10 @@ function mapSetCenter() {
 
 function initAutocomplete() {
     map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 33.7489954, lng: -84.3879824 },
+        center: {
+            lat: 33.7489954,
+            lng: -84.3879824
+        },
         zoom: 13,
         mapTypeId: 'roadmap'
     });
@@ -381,6 +390,3 @@ function initAutocomplete() {
         map.fitBounds(bounds);
     });
 }
-
-
-
