@@ -131,6 +131,9 @@ $("#city-input").on("keyup", function (event) {
         user.addVacation(vacation);
         user.selectedVacation = vacation;
 
+        geoCoding(newCity);
+        getWeather(user.selectedVacation);
+
         //clear city-input
         cityInput.val("");
 
@@ -185,6 +188,7 @@ function Weather(location, temperature, min, max, humidity, description) {
 
 //get weather from Weather API
 var getWeather = function (vacation) {
+    if(typeof vacation == "object"){
     var url = "https://api.openweathermap.org/data/2.5/forecast?";
     url += "APPID=e059918f7e48a37962d40029f4db4443";
     url += "&q=";
@@ -194,7 +198,6 @@ var getWeather = function (vacation) {
         url: url,
         method: 'GET',
     }).done(function (response) {
-
         var weatherData = [];
         for (var i = 0; i < 5; i++) {
             var eachWeatherData = response.list[i + 3];
@@ -264,8 +267,6 @@ $("#to-do-list").on("click", ".checkbox", function (event) {
     deleteActivity(user, toDoNumber);
     $("#item-" + toDoNumber).remove();
     showActivities(user.selectedVacation.activities);
-    console.log(user.selectedVacation.activities);
-    console.log(user);
     saveToDatabase();
 })
 
