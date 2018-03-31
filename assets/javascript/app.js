@@ -137,14 +137,6 @@ $("#city-input").on("keyup", function (event) {
     }
 });
 
-
-//Create click event for dynamically created buttons
-// $("#" + newCity).on("click", function (event) {
-//     user.selectedVacation = newCity;
-//     console.log("city clicked" + user);
-// });
-
-
 //show activity list for the selected vacation 
 function showActivities(activities) {
     var dateButtons = $("#date-buttons");
@@ -193,7 +185,7 @@ function Weather(location, temperature, min, max, humidity, description) {
 
 //get weather from Weather API
 var getWeather = function (vacation) {
-    var url = "http://api.openweathermap.org/data/2.5/forecast?";
+    var url = "https://api.openweathermap.org/data/2.5/forecast?";
     url += "APPID=e059918f7e48a37962d40029f4db4443";
     url += "&q=";
     url += vacation.location;
@@ -213,26 +205,9 @@ var getWeather = function (vacation) {
                 eachWeatherData.main.temp_max,
                 eachWeatherData.main.humidity,
                 eachWeatherData.weather[0].description);
-<<<<<<< HEAD
             weatherData.push(weather);
         };
         vacation.weatherData = weatherData;
-=======
-            vacation.weatherData.push(weather);
-			console.log(vacation.weatherData);
-        }
-
-        // response.list.forEach(function(eachWeatherData){
-        //     var weather = new Weather(
-        //         location, 
-        //         eachWeatherData.main.temp, 
-        //         eachWeatherData.main.temp_min,
-        //         eachWeatherData.main.temp_max,
-        //         eachWeatherData.main.humidity,
-        //         eachWeatherData.weather[0].description);
-        //         weatherData.push(weather);
-        // });
->>>>>>> 683698479f91af3daaf2c8043f3d149016e8af13
     });
 };
 
@@ -313,7 +288,9 @@ $(".tabs").on("click", "a", function (event) {
     event.preventDefault();
     var city = $(this).text();
     geoCoding(city);
-    user.selectedVacation = user.vacations.find(function(each){return each.location == city});
+    user.selectedVacation = user.vacations.find(function (each) {
+        return each.location == city
+    });
     showActivities(user.selectedVacation.activities);
     getWeather(user.selectedVacation);
 });
