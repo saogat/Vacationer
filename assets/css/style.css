@@ -1,174 +1,172 @@
-#panel{
-    background-color: lightgoldenrodyellow;
-    padding-top:20px;
-    padding-bottom:30px;
+#panel {
+  background-color: lightgoldenrodyellow;
+  padding-top: 20px;
+  padding-bottom: 30px;
 }
 
 .nav-extended {
-	background-image:url(../images/beach2.jpg);
-	background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-	text-shadow: 0 1px 3px rgba(1,0,0,5);
-	color: white;
+  background-image: url(../images/beach2.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-shadow: 0 1px 3px rgba(1, 0, 0, 5);
+  color: white;
 }
-.nav-extended, li {
-	color: white;	
+
+.nav-extended,
+li {
+  color: white;
 }
+
 .nav-content {
-	background-color: rgba(0, 0, 0, 0.5);
-/*	left: -11px;*/
-	width: 100%;
-	margin-left: auto;
-	margin-right: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  /*	left: -11px;*/
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
+
 .brand-logo {
-	float: left;
-	margin-left: 2%;
-	text-shadow: 0 1px 3px rgba(1, 0, 0, 9);
-	margin-top: 1%;
+  float: left;
+  margin-left: 2%;
+  text-shadow: 0 1px 3px rgba(1, 0, 0, 9);
+  margin-top: 1%;
 }
-.center, #city-input {
-	height: 1.6em;
-	border: none;
-	color: black;
-	display: -webkit-flex;
-	  display: -ms-flexbox;
-	  display: flex;
-	  -webkit-align-items: center;
-		  -ms-flex-align: center;
-			  align-items: center;
-	margin-top: 4%;
-}
+
+.center,
 #city-input {
-	background-color: white;
-	width: 30%;
-	margin-left: auto;
+  height: 1.6em;
+  border: none;
+  color: black;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-top: 4%;
+}
+
+#city-input {
+  background-color: white;
+  width: 30%;
+  margin-left: auto;
   margin-right: auto;
   color: black;
 }
+
 #api-pics {
-	margin-left: auto;
-	margin-right: auto;
-	
+  margin-left: auto;
+  margin-right: auto;
 }
+
 .footer {
-	background-color: #414141;
+  background-color: #414141;
 }
+
 .page-footer {
-	background-color: #414141;
-	font-size: .7em;	
-}
-<<<<<<< HEAD
-
-.g-signin2{
-  width: 50px;
-  height: 40px;
-
+  background-color: #414141;
+  font-size: .7em;
 }
 
-
-=======
 .profile {
-	width: auto;
-	height: auto;
+  width: auto;
+  height: auto;
 }
+
 .google {
-	margin-top: 10px;
+  margin-top: 10px;
 }
->>>>>>> 683698479f91af3daaf2c8043f3d149016e8af13
-
-
-
 
 /*********************************** google map styling ******************************************/
-   /* Always set the map height explicitly to define the size of the div
+
+/* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
-       #map {
-        height: 100%;
-        width: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      #googleMapParentDiv {
-        height: 400px;
-        width: 600px;
-        margin: 0;
-        padding-right: 0;
-      }
-      #description {
-        font-family: Roboto;
-        font-size: 15px;
-        font-weight: 300;
-      }
 
-      #infowindow-content .title {
-        font-weight: bold;
-      }
-
-      #infowindow-content {
-        display: none;
-      }
-
-      #map #infowindow-content {
-        display: inline;
-      }
-
-      .pac-card {
-        margin: 10px 10px 0 0;
-        border-radius: 2px 0 0 2px;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        outline: none;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-        background-color: #fff;
-        font-family: Roboto;
-      }
-
-      #pac-container {
-        padding-bottom: 12px;
-        margin-right: 12px;
-      }
-
-      .pac-controls {
-        display: inline-block;
-        padding: 5px 11px;
-      }
-
-      .pac-controls label {
-        font-family: Roboto;
-        font-size: 13px;
-        font-weight: 300;
-      }
-
-      #pac-input {
-        background-color: #fff;
-        font-family: Roboto;
-        font-size: 15px;
-        font-weight: 300;
-        margin-left: 12px;
-        padding: 0 11px 0 13px;
-        text-overflow: ellipsis;
-        width: 400px;
-      }
-
-      #pac-input:focus {
-        border-color: #4d90fe;
-      }
-
-      #title {
-        color: #fff;
-        background-color: #4d90fe;
-        font-size: 25px;
-        font-weight: 500;
-        padding: 6px 12px;
-      }
-      #target {
-        width: 345px;
-      }
-
-    /*********************************** google map styling ******************************************/
-
-.profile {
+#map {
+  height: 100%;
+  width: 100%;
 }
-.google {
+
+/* Optional: Makes the sample page fill the window. */
+
+#googleMapParentDiv {
+  height: 400px;
+  width: 600px;
+  margin: 0;
+  padding-right: 0;
 }
+
+#description {
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+#infowindow-content .title {
+  font-weight: bold;
+}
+
+#infowindow-content {
+  display: none;
+}
+
+#map #infowindow-content {
+  display: inline;
+}
+
+.pac-card {
+  margin: 10px 10px 0 0;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  background-color: #fff;
+  font-family: Roboto;
+}
+
+#pac-container {
+  padding-bottom: 12px;
+  margin-right: 12px;
+}
+
+.pac-controls {
+  display: inline-block;
+  padding: 5px 11px;
+}
+
+.pac-controls label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+}
+
+#pac-input {
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 12px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 400px;
+}
+
+#pac-input:focus {
+  border-color: #4d90fe;
+}
+
+#title {
+  color: #fff;
+  background-color: #4d90fe;
+  font-size: 25px;
+  font-weight: 500;
+  padding: 6px 12px;
+}
+
+#target {
+  width: 345px;
+}
+
+/*********************************** google map styling ******************************************/
