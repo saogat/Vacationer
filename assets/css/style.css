@@ -1,5 +1,4 @@
 
-
 #panel{
     background-color: lightgoldenrodyellow;
     padding-top:20px;
@@ -81,7 +80,7 @@ li {
 	margin-bottom: 20px;
 }
 ul li:hover {
-  	background-color: rgba(0, 0, 0, 0.5);
+  	background-color: rgba(0, 0, 0, 0.4);
 }
 .close {
 	cursor: pointer;
@@ -97,6 +96,19 @@ ul li:hover {
 
 .close:hover {
 /*	background: #bbb;*/
+}
+.tabs li{
+/*	display:inline;*/
+	padding: 0 10px 0 10px;
+	margin-top: -10px;
+	border-right-style: solid;
+    border-right-width: .01px;
+	color: rgba(255, 255, 255, 0.2);
+	
+ 
+}
+.tabs li:last-child {
+    border-right: none;
 }
 
 
