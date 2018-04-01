@@ -34,6 +34,10 @@ li {
   margin-top: 1%;
 }
 
+#directions{
+  text-align: center;
+}
+
 .center,
 #city-input {
   height: 1.6em;
@@ -54,6 +58,35 @@ li {
   margin-left: auto;
   margin-right: auto;
   color: black;
+}
+
+#main-row{
+  background-image:url(../images/passport.jpg);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+#date-header{
+  color: white;
+  font-size: 18px;
+}
+
+#activity-header{
+  color: white;
+  font-size: 18px;
+}
+
+#photo-feed{
+  background-color: white;
+  height:100%;
+  position:absolute;
+  right:0px;
+  overflow: auto;
+}
+
+img{
+  max-width: 100%;
 }
 
 #api-pics {
