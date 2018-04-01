@@ -40,7 +40,7 @@
     <nav class="nav-extended">
         <div class="nav-wrapper">
             <a href="#" class="brand-logo">
-                <img src="assets/images/vacationer_logo_wht.gif" width="145" height="auto" alt="" />
+                <img src="assets/images/vacationer_logo_wht.gif" width="145" height="auto" alt=""/>
             </a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li>
@@ -51,20 +51,27 @@
          	</ul>
       	</div>
 <!--New Cites INPUT Goes Here-->	
-	<div class="row">
-	  <div class="col s12">
-			<input type="text" class="center-align" id="city-input" placeholder="Where do you want to go?">
-		</div>	
-	</div>
+		<div class="row">
+		 	<div class="col s12">
+				<input type="text" class="center-align" id="city-input" placeholder="Where do you want to go?">
+		 	 </div>	
+		</div>
 <!--New Cites Names Go Here-->
-	  		<div class="row">
-				<div class="col s12">
-					<div class="nav-content">
-						<ul class="tabs tabs-transparent">
-						</ul>
-        			</div>
+		<div class="row">
+			<div class="col s12">
+			  	<div class="nav-content">
+					<ul class="tabs tabs-transparent">
+						<li class="tab">
+								<a >Mexico City<span class="close">&times;</span></a>
+								<span class="close">&times;</span>
+							</li>
+							<li class="tab">
+								<a >London<span class="close">&times;</span></a>
+							</li>
+					</ul>
 				</div>
 			</div>
+		</div>
     </nav>
     <!--Main page-->
     <div class="row">
@@ -77,7 +84,7 @@
                 <button id="add-button">Add</button>
             </form>
         </div>
-        <div class=container>
+        <div class="container">
             <!--Dates list-->
             <div class="col s2" id="days">
                 <div id="date-header">
@@ -94,20 +101,43 @@
             <div id="to-do-list"></div>
         </div>
     </div>
-
+	
+<div class="divider"></div>
+<div class="valign-wrapper">
     <div class="row">
-        <!--Weather API-->
-        <div class="col s6">
-            <h3>Div to hold Weather API</h3>
-        </div>
-        <!--Maps API-->
-        <div class="col s6" id="googleMapParentDiv">
-            <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-            <div id="map"></div>
-        </div>
-    </div>
-    </div>
+        
+	  <div class="col s12">
+		<!--Weather API-->
+		  <div class="left">
+          
+				
+					<div id= "openweather" ><img src="assets/images/weather_ph.jpg" width="auto" height="400" alt=""/>
+			
+						<div id ="location"></div>
 
+						<div id ="temp"></div>
+
+						<div id ="temp_min"></div>
+
+						<div id ="temp_max"></div>
+
+						<div id ="humidity"></div>
+
+						<div id ="description"></div>
+
+			 		 </div>
+				
+        		
+			</div>
+			<!--Maps API-->
+				<div class="col s7" id="googleMapParentDiv">
+					<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+					<div id="map"></div>
+				</div>
+		
+		</div>
+	</div>
+</div>	
     <!--Footer-->
     <footer class="page-footer">
         <div class="footer-copyright">
@@ -122,6 +152,17 @@
 
     <script src="assets/javascript/app.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6ro8ednBUBnAeYhcjizzp3NvEqFCScNs&libraries=places&callback=initAutocomplete" async defer></script>
+	
+	<script>
+	var closebtns = document.getElementsByClassName("close");
+	var i;
+
+	for (i = 0; i < closebtns.length; i++) {
+	  closebtns[i].addEventListener("click", function() {
+		this.parentElement.style.display = 'none';
+	  });
+	}
+	</script>
 
 </body>
 

@@ -1,7 +1,8 @@
-#panel {
-  background-color: lightgoldenrodyellow;
-  padding-top: 20px;
-  padding-bottom: 30px;
+
+#panel{
+    background-color: lightgoldenrodyellow;
+    padding-top:20px;
+    padding-bottom:30px;
 }
 
 .nav-extended {
@@ -70,103 +71,138 @@ li {
 }
 
 .profile {
-  width: auto;
-  height: auto;
+	margin-top: 10px;
+	margin-right: 10px;
 }
 
-.google {
-  margin-top: 10px;
+.divider {
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
+ul li:hover {
+  	background-color: rgba(0, 0, 0, 0.4);
+}
+.close {
+	cursor: pointer;
+	top: 50%;
+	right: 0%;
+	padding: 12px 5px;
+	transform: translate(0%, -50%);
+	font-size: 1em;
+	font-weight: lighter;
+	vertical-align:top;
+	text-align: center;	
+}
+
+.close:hover {
+/*	background: #bbb;*/
+}
+.tabs li{
+/*	display:inline;*/
+	padding: 0 10px 0 10px;
+	margin-top: -10px;
+	border-right-style: solid;
+    border-right-width: .01px;
+	color: rgba(255, 255, 255, 0.2);
+	
+ 
+}
+.tabs li:last-child {
+    border-right: none;
+}
+
+
+/*********************************** OpenWeather API styling ******************************************/
+
+#openweather {
+	margin-right: 5em;
+}
+
+
 
 /*********************************** google map styling ******************************************/
-
-/* Always set the map height explicitly to define the size of the div
+   /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
+       #map {
+        height: 100%;
+        width: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      #googleMapParentDiv {
+        height: 400px;
+        width: 600px;
+        margin: 0;
+      }
+      #description {
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+      }
 
-#map {
-  height: 100%;
-  width: 100%;
-}
+      #infowindow-content .title {
+        font-weight: bold;
+      }
 
-/* Optional: Makes the sample page fill the window. */
+      #infowindow-content {
+        display: none;
+      }
 
-#googleMapParentDiv {
-  height: 400px;
-  width: 600px;
-  margin: 0;
-  padding-right: 0;
-}
+      #map #infowindow-content {
+        display: inline;
+      }
 
-#description {
-  font-family: Roboto;
-  font-size: 15px;
-  font-weight: 300;
-}
+      .pac-card {
+        margin: 10px 10px 0 0;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        background-color: #fff;
+        font-family: Roboto;
+      }
 
-#infowindow-content .title {
-  font-weight: bold;
-}
+      #pac-container {
+        padding-bottom: 12px;
+        margin-right: 12px;
+      }
 
-#infowindow-content {
-  display: none;
-}
+      .pac-controls {
+        display: inline-block;
+        padding: 5px 11px;
+      }
 
-#map #infowindow-content {
-  display: inline;
-}
+      .pac-controls label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+      }
 
-.pac-card {
-  margin: 10px 10px 0 0;
-  border-radius: 2px 0 0 2px;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  outline: none;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  background-color: #fff;
-  font-family: Roboto;
-}
+      #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 400px;
+      }
 
-#pac-container {
-  padding-bottom: 12px;
-  margin-right: 12px;
-}
+      #pac-input:focus {
+        border-color: #4d90fe;
+      }
 
-.pac-controls {
-  display: inline-block;
-  padding: 5px 11px;
-}
+      #title {
+        color: #fff;
+        background-color: #4d90fe;
+        font-size: 25px;
+        font-weight: 500;
+        padding: 6px 12px;
+      }
+      #target {
+        width: 345px;
+      }
 
-.pac-controls label {
-  font-family: Roboto;
-  font-size: 13px;
-  font-weight: 300;
-}
+    /*********************************** google map styling ******************************************/
 
-#pac-input {
-  background-color: #fff;
-  font-family: Roboto;
-  font-size: 15px;
-  font-weight: 300;
-  margin-left: 12px;
-  padding: 0 11px 0 13px;
-  text-overflow: ellipsis;
-  width: 400px;
-}
-
-#pac-input:focus {
-  border-color: #4d90fe;
-}
-
-#title {
-  color: #fff;
-  background-color: #4d90fe;
-  font-size: 25px;
-  font-weight: 500;
-  padding: 6px 12px;
-}
-
-#target {
-  width: 345px;
-}
-
-/*********************************** google map styling ******************************************/
