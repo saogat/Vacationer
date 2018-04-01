@@ -389,7 +389,7 @@ function initAutocomplete() {
 }
 
 //Pixabay Photo API
-var pixURL = "https://pixabay.com/api/?q=Paris&image_type=photo&category=places&orientation=vertical&safesearch=true&order=popular&key=8561959-695370e3d9d8574348bbe6f72"
+var pixURL = "https://pixabay.com/api/?q=Atlanta&image_type=photo&category=places&orientation=vertical&safesearch=true&order=popular&key=8561959-695370e3d9d8574348bbe6f72"
 
 $.ajax({
     url: pixURL,
