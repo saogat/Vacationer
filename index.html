@@ -62,10 +62,11 @@
 			  	<div class="nav-content">
 					<ul class="tabs tabs-transparent">
 						<li class="tab">
-								<a >Mexico City</a>
+								<a >Mexico City<span class="close">&times;</span></a>
+								<span class="close">&times;</span>
 							</li>
 							<li class="tab">
-								<a >London</a>
+								<a >London<span class="close">&times;</span></a>
 							</li>
 					</ul>
 				</div>
@@ -151,6 +152,17 @@
 
     <script src="assets/javascript/app.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6ro8ednBUBnAeYhcjizzp3NvEqFCScNs&libraries=places&callback=initAutocomplete" async defer></script>
+	
+	<script>
+	var closebtns = document.getElementsByClassName("close");
+	var i;
+
+	for (i = 0; i < closebtns.length; i++) {
+	  closebtns[i].addEventListener("click", function() {
+		this.parentElement.style.display = 'none';
+	  });
+	}
+	</script>
 
 </body>
 

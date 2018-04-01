@@ -80,6 +80,24 @@ li {
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
+ul li:hover {
+  	background-color: rgba(0, 0, 0, 0.5);
+}
+.close {
+	cursor: pointer;
+	top: 50%;
+	right: 0%;
+	padding: 12px 5px;
+	transform: translate(0%, -50%);
+	font-size: 1em;
+	font-weight: lighter;
+	vertical-align:top;
+	text-align: center;	
+}
+
+.close:hover {
+/*	background: #bbb;*/
+}
 
 
 /*********************************** OpenWeather API styling ******************************************/
