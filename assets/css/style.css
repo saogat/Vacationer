@@ -4,6 +4,7 @@
     background-color: lightgoldenrodyellow;
     padding-top:20px;
     padding-bottom:30px;
+}
 
 .nav-extended {
   background-image: url(../images/beach2.jpg);
@@ -75,14 +76,16 @@ li {
 	margin-right: 10px;
 }
 
-/*********************************** google map styling ******************************************/
+.divider {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
 
-/* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
 
-#map {
-  height: 100%;
-  width: 100%;
+/*********************************** OpenWeather API styling ******************************************/
+
+#openweather {
+	margin-right: 5em;
 }
 
 
@@ -99,7 +102,6 @@ li {
         height: 400px;
         width: 600px;
         margin: 0;
-        padding-right: 0;
       }
       #description {
         font-family: Roboto;

@@ -385,16 +385,5 @@ function initAutocomplete() {
         });
         map.fitBounds(bounds);
     });
-<<<<<<< HEAD
+	
 }
-
-$('.button-collapse').sideNav({
-      menuWidth: 300,
-      closeOnClick: true,
-      edge: 'right', // <--- CHECK THIS OUT
-    }
-  );
-  $('.collapsible').collapsible();
-=======
-}
->>>>>>> b5a08cb8a547aeee057210e5c734a296d321101e
