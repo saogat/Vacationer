@@ -126,18 +126,21 @@ $("#city-input").on("keyup", function (event) {
 
         var cityInput = $("#city-input");
         newCity = cityInput.val().trim();
+        var cityDiv = $("<div>");
+        cityDiv.attr("class", "city-div");
         var cityList = $("<li>");
         var cityLink = $("<a>");
         cityList.addClass("tab");
         cityLink.attr("id", newCity);
         cityLink.text(newCity);
-        $(cityList).append(cityLink);
+        cityList.append(cityDiv);
+        cityDiv.append(cityLink);
         $(".tabs").append(cityList);
 
         //Delete option to City input button
 
         var deleteButton = $("<button>");
-        cityLink.prepend (deleteButton);
+        cityDiv.prepend (deleteButton);
         deleteButton.text ("✗");
         deleteButton.addClass("close");
         
@@ -145,6 +148,8 @@ $("#city-input").on("keyup", function (event) {
         var vacation = new Vacation(newCity, newCity, []);
         user.addVacation(vacation);
         user.selectedVacation = vacation;
+        console.log("Selected: "); 
+        console.log(user.selectedVacation);
 
         geoCoding(newCity);
         getWeather(user.selectedVacation);
@@ -323,6 +328,7 @@ $("#add-button").on("click", function (event) {
         showActivities(user.selectedVacation.activities);
         clearAdd();
         saveToDatabase();
+        console.log("Clicked");
     }
 })
 
@@ -354,10 +360,14 @@ function geoCoding(city) {
 $(".tabs").on("click", "a", function (event) {
     event.preventDefault();
     var city = $(this).text();
+    console.log("City" + city);
+    console.log(user);
     geoCoding(city);
     user.selectedVacation = user.vacations.find(function (each) {
-        return each.location == city
+        return each.location == city;
+
     });
+    console.log("Selected Vacation: " + user.selectedVacation);
     showActivities(user.selectedVacation.activities);
     getWeather(user.selectedVacation);
     renderWeatherData(user.selectedVacation);
