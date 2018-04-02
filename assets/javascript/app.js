@@ -341,12 +341,12 @@ function retrieveFromDatabase() {
 
     ref.once("value")
         .then(function (snapshot) {
-                var users = snapshot.val().users;
-                var databaseUser = users.find(function (each) {
+                var dbUsers = snapshot.val().users;
+                var dbUser = dbUsers.find(function (each) {
                     return each.name == user.name;
                 });
 
-                databaseUser.vacations.forEach(function (dbVacation) {
+                dbUser.vacations.forEach(function (dbVacation) {
                     var vacation = new Vacation(dbVacation.location, dbVacation.location, []);
                     dbVacation.activities.forEach(function (dbActivity) {
                         var activity = new Activity(dbVacation.location, dbVacation.dateEntry, dbVacation.activityEntry, dbVacation.completed);
