@@ -25,6 +25,12 @@ function Vacationer(name, password, vacations, selectedVacation) {
     this.addVacation = function (vacation) {
         this.vacations.push(vacation);
     };
+    this.deleteVacation = function () {
+        var index = this.vacations.index(this.selectedVacation);
+        this.vacations.splice(index, 1);
+        this.selectedVacation = null;
+        
+    }
     this.selectedVacation = selectedVacation;
     this.databaseObject = function () {
         var tempUser = {};
@@ -86,8 +92,9 @@ function onSignIn(googleUser) {
     console.log('Image URL: ' + profile.getImageUrl());
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     var userDiv = $(".user");
-    var userImage = $("<img>").attr("href", profile.getImageUrl());
+    var userImage = $("<img>").attr("src", profile.getImageUrl());
     var userName = $("<p>").text(profile.getName());
+        userDiv.empty();
     userDiv.append(userImage);
     userDiv.append(userName);
 
@@ -119,17 +126,30 @@ $("#city-input").on("keyup", function (event) {
 
         var cityInput = $("#city-input");
         newCity = cityInput.val().trim();
+        var cityDiv = $("<div>");
+        cityDiv.attr("class", "city-div");
         var cityList = $("<li>");
         var cityLink = $("<a>");
         cityList.addClass("tab");
         cityLink.attr("id", newCity);
         cityLink.text(newCity);
-        $(cityList).append(cityLink);
+        cityList.append(cityDiv);
+        cityDiv.append(cityLink);
         $(".tabs").append(cityList);
+
+        //Delete option to City input button
+
+        var deleteButton = $("<button>");
+        cityDiv.prepend (deleteButton);
+        deleteButton.text ("✗");
+        deleteButton.addClass("close");
+        
 
         var vacation = new Vacation(newCity, newCity, []);
         user.addVacation(vacation);
         user.selectedVacation = vacation;
+        console.log("Selected: "); 
+        console.log(user.selectedVacation);
 
         geoCoding(newCity);
         getWeather(user.selectedVacation);
@@ -139,7 +159,13 @@ $("#city-input").on("keyup", function (event) {
 
     }
 });
+//Delete Vacation City
 
+$(document).on ("click", ".close", function (event) {
+    $(".tab").empty();
+    user.deleteVacation();
+
+})
 //show activity list for the selected vacation 
 function showActivities(activities) {
     var dateButtons = $("#date-buttons");
@@ -303,6 +329,7 @@ $("#add-button").on("click", function (event) {
         showActivities(user.selectedVacation.activities);
         clearAdd();
         saveToDatabase();
+        console.log("Clicked");
     }
 })
 
@@ -334,10 +361,18 @@ function geoCoding(city) {
 $(".tabs").on("click", "a", function (event) {
     event.preventDefault();
     var city = $(this).text();
+<<<<<<< HEAD
 
+=======
+    console.log("City" + city);
+    console.log(user);
+    geoCoding(city);
+>>>>>>> 4a6424eaca46abe24a554239168bd9a2fb521f06
     user.selectedVacation = user.vacations.find(function (each) {
-        return each.location == city
+        return each.location == city;
+
     });
+    console.log("Selected Vacation: " + user.selectedVacation);
     showActivities(user.selectedVacation.activities);
     getWeather(user.selectedVacation);
     renderWeatherData(user.selectedVacation);
@@ -454,6 +489,7 @@ $.ajax({
     newImage = $("<img>");
     $(newImage).attr("src", imageURL);
     $(newImage).attr("width", 500)
-    $("#photo-feed").append(newImage);
+    $(newImage).attr("id", "city-pic")
+    $("#photo-feed").html(newImage);
 });
 }
