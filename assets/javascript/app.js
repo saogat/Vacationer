@@ -472,6 +472,7 @@ $.ajax({
     newImage = $("<img>");
     $(newImage).attr("src", imageURL);
     $(newImage).attr("width", 500)
-    $("#photo-feed").append(newImage);
+    $(newImage).attr("id", "city-pic")
+    $("#photo-feed").html(newImage);
 });
 }

@@ -65,13 +65,16 @@
 }
 
 #date-header {
-  color: white;
-  font-size: 18px;
+  color: black;
+  text-align: center;
+  font-size: 20px;
 }
 
 #activity-header {
-  color: white;
-  font-size: 18px;
+  color: black;
+  text-align: center;
+  font-size: 20px;
+  border-bottom: #414141;
 }
 
 #photo-feed {
@@ -82,8 +85,10 @@
   overflow: auto;
 }
 
-img {
-  max-width: 100%;
+#city-pic{
+  object-fit: cover;
+  height: 100%;
+  width: auto;
 }
 
 #api-pics {
