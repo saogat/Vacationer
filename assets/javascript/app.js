@@ -3,7 +3,6 @@ var map;
 var newCity;
 var latit = "lat:";
 
-
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyCoa07mzxgyQ4VxmxNoMv4Q-MEhE3xBcW4",
@@ -18,11 +17,11 @@ firebase.initializeApp(config);
 // Get a reference to the database service
 var database = firebase.database();
 
+
 //Global variable object
-function Vacationer(name, password, vacations, selectedVacation) {
+function Vacationer(name, vacations = [], selectedVacation) {
     this.vacations = vacations;
     this.name = name;
-    this.password = password;
     this.selectedVacation = selectedVacation;
     this.addVacation = function (vacation) {
         this.vacations.push(vacation);
@@ -40,7 +39,6 @@ function Vacationer(name, password, vacations, selectedVacation) {
     this.databaseObject = function () {
         var tempUser = {};
         tempUser.name = this.name;
-        tempUser.password = this.password;
         tempUser.vacations = $.map(this.vacations, function (vacation) {
             return vacation.databaseObject();
         });
@@ -71,7 +69,7 @@ function Vacation(name, location, weatherData) {
 };
 
 //Create object constructor for activity
-function Activity(location, date, description, completed) {
+function Activity(location, date, description, completed = false) {
     this.location = location,
         this.date = date,
         this.description = description,
@@ -86,8 +84,25 @@ function Activity(location, date, description, completed) {
         }
 }
 
+function Vacationers(users = []) {
+    this.users = users;
+    this.addUser = function (user) {
+        this.users.push(user);
+    }
+    this.databaseObject = function () {
+        var tempVacationers = {};
+        tempVacationers.users = $.map(this.users, function (user) {
+            return user.databaseObject();
+        });
+        return tempVacationers;
+    }
+}
+
 //new Vacationer with name guest
-var user = new Vacationer("guest", "", []);
+var user = new Vacationer("guest");
+var vacationers = new Vacationers();
+vacationers.addUser(user);
+var users = vacationers.databaseObject().users;
 
 //Google signon
 function onSignIn(googleUser) {
@@ -105,6 +120,7 @@ function onSignIn(googleUser) {
 
     //set name on Vacationer
     user.name = profile.getName();
+    retrieveFromDatabase();
 }
 
 //Function to clear entry fields upon clicking submit
@@ -314,29 +330,37 @@ function saveToDatabase() {
     );
 }
 
-function retrieveFromDatabase() {
-    database.ref().on("value", function (snapshot) {
-
-        // Print the initial data to the console.
-        console.log(snapshot.val());
-
-        //   // Log the value of the various properties
-        //   console.log(snapshot.val().name);
-        //   console.log(snapshot.val().age);
-        //   console.log(snapshot.val().phone);
-
-        // Change the HTML
-        //   $("#displayed-data").text(snapshot.val().name + " | " + snapshot.val().age + " | " + snapshot.val().phone);
-
-        // If any errors are experienced, log them to console.
-    }, function (errorObject) {
-        console.log("The read failed: " + errorObject.code);
-    });
+function saveToDatabase() {
+    database.ref().set(
+        vacationers.databaseObject()
+    )
 }
 
-// retrieveFromDatabase();
-console.log(user.databaseObject());
-console.log(user);
+function retrieveFromDatabase() {
+    var ref = firebase.database().ref();
+
+    ref.once("value")
+        .then(function (snapshot) {
+                var users = snapshot.val().users;
+                var databaseUser = users.find(function (each) {
+                    return each.name == user.name;
+                });
+
+                databaseUser.vacations.forEach(function (dbVacation) {
+                    var vacation = new Vacation(dbVacation.location, dbVacation.location, []);
+                    dbVacation.activities.forEach(function (dbActivity) {
+                        var activity = new Activity(dbVacation.location, dbVacation.dateEntry, dbVacation.activityEntry, dbVacation.completed);
+                        vacation.addActivity(activity);
+                    });
+                    user.addVacation(vacation);
+                });
+
+                // If any errors are experienced, log them to console.
+            },
+            function (errorObject) {
+                console.log("The read failed: " + errorObject.code);
+            });
+}
 
 //Create click event function for activity entry form
 $("#add-button").on("click", function (event) {
@@ -388,7 +412,7 @@ $(".tabs").on("click", "button", function (event) {
     updateDisplay();
 });
 
-//set the center of the city
+//set the center of the city in Google Map
 function mapSetCenter() {
     if (map !== undefined && typeof map === "object") {
         map.setCenter(geoLocation);
@@ -397,7 +421,7 @@ function mapSetCenter() {
     }
 }
 
-//Google map 
+//Google map API
 function initAutocomplete() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
@@ -466,7 +490,6 @@ function initAutocomplete() {
         });
         map.fitBounds(bounds);
     });
-
 }
 
 //Pixabay Photo API
