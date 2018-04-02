@@ -86,7 +86,7 @@ function onSignIn(googleUser) {
     console.log('Image URL: ' + profile.getImageUrl());
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     var userDiv = $(".user");
-    var userImage = $("<img>").attr("href", profile.getImageUrl());
+    var userImage = $("<img>").attr("src", profile.getImageUrl());
     var userName = $("<p>").text(profile.getName());
     userDiv.append(userImage);
     userDiv.append(userName);
