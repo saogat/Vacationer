@@ -2,7 +2,6 @@ var geoLocation;
 var map;
 var newCity;
 
-
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyCoa07mzxgyQ4VxmxNoMv4Q-MEhE3xBcW4",
@@ -17,11 +16,11 @@ firebase.initializeApp(config);
 // Get a reference to the database service
 var database = firebase.database();
 
+
 //Global variable object
-function Vacationer(name, password, vacations, selectedVacation) {
+function Vacationer(name, vacations = [], selectedVacation) {
     this.vacations = vacations;
     this.name = name;
-    this.password = password;
     this.addVacation = function (vacation) {
         this.vacations.push(vacation);
     };
@@ -29,7 +28,6 @@ function Vacationer(name, password, vacations, selectedVacation) {
     this.databaseObject = function () {
         var tempUser = {};
         tempUser.name = this.name;
-        tempUser.password = this.password;
         tempUser.vacations = $.map(this.vacations, function (vacation) {
             return vacation.databaseObject();
         });
@@ -60,7 +58,7 @@ function Vacation(name, location, weatherData) {
 };
 
 //Create object constructor for activity
-function Activity(location, date, description, completed) {
+function Activity(location, date, description, completed = false) {
     this.location = location,
         this.date = date,
         this.description = description,
@@ -75,8 +73,29 @@ function Activity(location, date, description, completed) {
         }
 }
 
+function Vacationers(users = []) {
+    this.users = users;
+    this.addUser = function (user) {
+        this.users.push(user);
+    }
+    this.databaseObject = function () {
+        var tempVacationers = {};
+        tempVacationers.users = $.map(this.users, function (user) {
+            return user.databaseObject();
+        });
+        return tempVacationers;
+    }
+}
+
 //new Vacationer with name guest
-var user = new Vacationer("guest", "", []);
+
+var user = new Vacationer("guest");
+var vacationers = new Vacationers();
+vacationers.addUser(user);
+// user = new Vacationer("Jane");
+// vacationers.addUser(user);
+
+var users = vacationers.databaseObject().users;
 
 //Google signon
 function onSignIn(googleUser) {
@@ -93,8 +112,9 @@ function onSignIn(googleUser) {
 
     //set name on Vacationer
     user.name = profile.getName();
-}
+    retrieveFromDatabase();
 
+}
 
 //Function to clear entry fields upon clicking submit
 function clearAdd() {
@@ -215,37 +235,63 @@ var getWeather = function (vacation) {
     }
 }
 
+// function saveToDatabase() {
+//     database.ref().set({
+//        vacationers: vacationers.databaseObject()
+//      });
+// }
+
+
+// function saveToDatabase() {
+//     database.ref().set(
+//         users
+//     )
+// }
+
+
 function saveToDatabase() {
     database.ref().set(
-        user.databaseObject()
-    );
+        vacationers.databaseObject()
+    )
 }
 
 function retrieveFromDatabase() {
-    database.ref().on("value", function (snapshot) {
+    // database.ref().orderByChild("name").equalTo(user.name).on("child_added", function (snapshot) {
+    var ref = firebase.database().ref();
 
-        // Print the initial data to the console.
-        console.log(snapshot.val());
+    ref.once("value")
+        .then(function (snapshot) {
+                var name = snapshot.child("users/name").val(); // {first:"Ada",last:"Lovelace"}
+                console.log('Snapshot:', snapshot.val().users);
+                //   console.log('Name:', name);
 
-        //   // Log the value of the various properties
-        //   console.log(snapshot.val().name);
-        //   console.log(snapshot.val().age);
-        //   console.log(snapshot.val().phone);
+                var users = snapshot.val().users;
 
-        // Change the HTML
-        //   $("#displayed-data").text(snapshot.val().name + " | " + snapshot.val().age + " | " + snapshot.val().phone);
+                var databaseUser = users.find(function (each) {
+                    return each.name == user.name;
+                });
 
-        // If any errors are experienced, log them to console.
-    }, function (errorObject) {
-        console.log("The read failed: " + errorObject.code);
-    });
+                console.log("User ", databaseUser);
+                console.log(aUser);
+
+                databaseUser.vacations.forEach(function (dbVacation) {
+                    var vacation = new Vacation(dbVacation.location, dbVacation.location, []);
+                    dbVacation.activities.forEach(function (dbActivity) {
+                        var activity = new Activity(dbVacation.location, dbVacation.dateEntry, dbVacation.activityEntry, dbVacation.completed);
+                        vacation.addActivity(activity);
+                    });
+                    user.addVacation(vacation);
+                });
+
+                // If any errors are experienced, log them to console.
+            },
+            function (errorObject) {
+                console.log("The read failed: " + errorObject.code);
+            });
 }
 
+// saveToDatabase();
 // retrieveFromDatabase();
-
-console.log(user.databaseObject());
-console.log(user);
-
 
 //Create click event function for activity entry form
 $("#add-button").on("click", function (event) {
@@ -385,5 +431,5 @@ function initAutocomplete() {
         });
         map.fitBounds(bounds);
     });
-	
+
 }
