@@ -142,7 +142,11 @@ ul li:hover {
 .tabs li:last-child {
   border-right: none;
 }
-
+.user {
+  width: 200px;
+  height: auto;
+  
+}
 /*********************************** OpenWeather API styling ******************************************/
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300');
