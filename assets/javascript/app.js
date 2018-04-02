@@ -437,7 +437,7 @@ function initAutocomplete() {
 //Pixabay Photo API
 function pixabayAPI (city){
 
-    var pixURL = "https://pixabay.com/api/?q=" + city +"&image_type=photo&category=places&orientation=vertical&safesearch=true&order=popular&key=8561959-695370e3d9d8574348bbe6f72"
+    var pixURL = "https://pixabay.com/api/?q=" + city +"&image_type=photo&category=places&orientation=horizontal&safesearch=true&order=popular&key=8561959-695370e3d9d8574348bbe6f72"
 
 $.ajax({
     url: pixURL,
