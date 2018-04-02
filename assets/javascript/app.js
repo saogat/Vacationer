@@ -125,24 +125,25 @@ $("#city-input").on("keyup", function (event) {
         //     event.preventDefault();
 
         var cityInput = $("#city-input");
-        newCity = cityInput.val().trim();
-        var cityDiv = $("<div>");
-        cityDiv.attr("class", "city-div");
-        var cityList = $("<li>");
-        var cityLink = $("<a>");
-        cityList.addClass("tab");
-        cityLink.attr("id", newCity);
-        cityLink.text(newCity);
-        cityList.append(cityDiv);
-        cityDiv.append(cityLink);
-        $(".tabs").append(cityList);
+       newCity = cityInput.val().trim();
+       var cityDiv = $("<div>");
+       var cityList = $("<li>");
+       var cityLink = $("<a>");
+       cityList.attr("class", "tab");
+       cityDiv.attr("class", "city-div");
+       cityLink.attr("id", newCity);
+       cityLink.attr("class", "a-tag");
+       cityLink.text(newCity);
+       cityDiv.append(cityLink);
+       cityList.append(cityDiv);
+       $(".tabs").append(cityList);
 
-        //Delete option to City input button
+       //Delete option to City input button
 
-        var deleteButton = $("<button>");
-        cityDiv.prepend (deleteButton);
-        deleteButton.text ("✗");
-        deleteButton.addClass("close");
+       var deleteButton = $("<button>");
+       cityDiv.append(deleteButton);
+       deleteButton.text ("✗");
+       deleteButton.addClass("close");
         
 
         var vacation = new Vacation(newCity, newCity, []);
