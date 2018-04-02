@@ -28,7 +28,7 @@
 
     <!-- Google API -->
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    
+
 
 
     <title>Vacationer</title>
@@ -40,41 +40,48 @@
     <nav class="nav-extended">
         <div class="nav-wrapper">
             <a href="#" class="brand-logo">
-                <img src="assets/images/vacationer_logo_wht.gif" width="145" height="auto" alt=""/>
+                <img src="assets/images/vacationer_logo_wht.gif" width="145" height="auto" alt="" />
             </a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li>
                     <div class="g-signin2" data-onsuccess="onSignIn"></div>
                     <div class="user"></div>
-                    <a href="placeholder.html" class="profile"><img src="assets/images/google_sign_in.jpg" alt="Google Sign In Placeholder" width="135px" height="auto" class="google"/></a>
-              	</li>
-         	</ul>
-      	</div>
-<!--New Cites INPUT Goes Here-->	
-		<div class="row">
-		 	<div class="col s12">
-				<input type="text" class="center-align" id="city-input" placeholder="Where do you want to go?">
-		 	 </div>	
-		</div>
-<!--New Cites Names Go Here-->
-		<div class="row">
-			<div class="col s12">
-			  	<div class="nav-content">
-					<ul class="tabs tabs-transparent">
-						<li class="tab">
-								<a >Mexico City<span class="close">&times;</span></a>
-								<span class="close">&times;</span>
-							</li>
-							<li class="tab">
-								<a >London<span class="close">&times;</span></a>
-							</li>
-					</ul>
-				</div>
-			</div>
-		</div>
+                    <a href="placeholder.html" class="profile">
+                        <img src="assets/images/google_sign_in.jpg" alt="Google Sign In Placeholder" width="135px" height="auto" class="google" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!--New Cites INPUT Goes Here-->
+        <div class="row">
+            <div class="col s12">
+                <h4 id="directions">Start planning your next vacation here</h4>
+                <input type="text" class="center-align" id="city-input" placeholder="Where do you want to go?">
+            </div>
+        </div>
+        <!--New Cites Names Go Here-->
+        <div class="row">
+            <div class="col s12">
+                <div class="nav-content">
+                    <ul class="tabs tabs-transparent">
+                        <li class="tab">
+                            <a>Mexico City
+                                <span class="close">&times;</span>
+                            </a>
+                            <span class="close">&times;</span>
+                        </li>
+                        <li class="tab">
+                            <a>London
+                                <span class="close">&times;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </nav>
     <!--Main page-->
-    <div class="row">
+    <div class="row" id="main-row">
         <!--Add activities input box-->
         <div class="col s2" id="panel">
             <form>
@@ -92,52 +99,62 @@
                 </div>
                 <div id="date-buttons"></div>
             </div>
-        </div>
-        <!--To do list-->
-        <div class="col s8" id="to-do-panel">
-            <div id="activity-header">
-                <p>Activity</p>
+
+            <!--To do list-->
+            <div class="col s8" id="to-do-panel">
+                <div id="activity-header">
+                    <p>Activity</p>
+                </div>
+                <div id="to-do-list"></div>
             </div>
-            <div id="to-do-list"></div>
+        </div>
+        <!--Div to hold photo-->
+        <div class="col s2" id="photo-feed"></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="valign-wrapper">
+        <div class="row">
+
+            <div class="col m6">
+                <!--Weather API-->
+                <div class="weatherbox">
+                    <img class="currentWeather" src="https://s3.amazonaws.com/staticzachsspace/11.png" />
+
+                    <div class="temp">55C</div>
+                    <div class="city">Atlanta</div>
+                    <div class="description">few clouds</div>
+
+                    <div class="weatherData">
+                        <ul>
+                            <li class="MaxAndMin">70 50</li>
+                            <li class="humidity">50</li>
+                           
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="days">
+                    <div class="day">
+                        <img src="https://s3.amazonaws.com/staticzachsspace/11.png" />Mon</div>
+                    <div class="day">Tues</div>
+                    <div class="day">Wed</div>
+                    <div class="day">Thurs</div>
+                </div>
+            </div>
+
+            
+
+            <!--Maps API-->
+            <div class="col m6" id="googleMapParentDiv">
+                <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+                <div id="map"></div>
+            </div>
+
         </div>
     </div>
-	
-<div class="divider"></div>
-<div class="valign-wrapper">
-    <div class="row">
-        
-	  <div class="col s12">
-		<!--Weather API-->
-		  <div class="left">
-          
-				
-					<div id= "openweather" ><img src="assets/images/weather_ph.jpg" width="auto" height="400" alt=""/>
-			
-						<div id ="location"></div>
-
-						<div id ="temp"></div>
-
-						<div id ="temp_min"></div>
-
-						<div id ="temp_max"></div>
-
-						<div id ="humidity"></div>
-
-						<div id ="description"></div>
-
-			 		 </div>
-				
-        		
-			</div>
-			<!--Maps API-->
-				<div class="col s7" id="googleMapParentDiv">
-					<input id="pac-input" class="controls" type="text" placeholder="Search Box">
-					<div id="map"></div>
-				</div>
-		
-		</div>
-	</div>
-</div>	
+    </div>
     <!--Footer-->
     <footer class="page-footer">
         <div class="footer-copyright">
@@ -151,18 +168,19 @@
     <!--BEGIN JAVASCRIPT-->
 
     <script src="assets/javascript/app.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6ro8ednBUBnAeYhcjizzp3NvEqFCScNs&libraries=places&callback=initAutocomplete" async defer></script>
-	
-	<script>
-	var closebtns = document.getElementsByClassName("close");
-	var i;
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6ro8ednBUBnAeYhcjizzp3NvEqFCScNs&libraries=places&callback=initAutocomplete"
+        async defer></script>
 
-	for (i = 0; i < closebtns.length; i++) {
-	  closebtns[i].addEventListener("click", function() {
-		this.parentElement.style.display = 'none';
-	  });
-	}
-	</script>
+    <script>
+        var closebtns = document.getElementsByClassName("close");
+        var i;
+
+        for (i = 0; i < closebtns.length; i++) {
+            closebtns[i].addEventListener("click", function () {
+                this.parentElement.style.display = 'none';
+            });
+        }
+    </script>
 
 </body>
 
