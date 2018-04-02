@@ -143,9 +143,9 @@ ul li:hover {
   border-right: none;
 }
 .user {
-  width: 200px;
-  height: auto;
-  
+  width: 100%;
+  height: 100%;
+
 }
 /*********************************** OpenWeather API styling ******************************************/
 
