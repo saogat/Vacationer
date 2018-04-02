@@ -152,6 +152,7 @@ function showActivities(activities) {
 
         //show activity date
         var dateDiv = $("<div>");
+        $(dateDiv).attr()
 
         dateDiv.append($("<p>").text(activity.date));
         dateButtons.append(dateDiv);
@@ -177,15 +178,40 @@ function deleteActivity(user, activityNumber) {
     user.selectedVacation.deleteActivity(activityNumber);
 }
 
-function Weather(location, temperature, min, max, humidity, description) {
+function Weather(location, temperature, min, max, humidity, description, image) {
     this.location = location;
     this.temperature = temperature;
     this.min = min;
     this.max = max;
     this.humidity = humidity;
     this.description = description;
+    this.image = image;
 }
 
+//Weather Data Display
+function getImageToDisplay(data) {
+    if (data.hasOwnProperty('weather')) {
+        var result = "clear.png"; //default
+        data.weather.forEach(function (weather) {
+            if (weather.main.includes('clouds') || weather.main.includes('cloud') || weather.description.includes('clouds') || weather.description.includes('cloud')) {
+                result = "cloudy.png";
+            } if (weather.main.includes("rain") || weather.description.includes('rain')) {
+                result = "rainy.png";
+
+            }
+            if (weather.main.includes("sun") || weather.description.includes('sun')) {
+                result = "sunny.png";
+            }
+            if (weather.main.includes("snow") || weather.description.includes('snow')) {
+                result = "snow.png";
+            }
+
+        });
+        return result;
+    } else {
+        return "undefined.png";
+    }
+}
 //get weather from Weather API
 var getWeather = function (vacation) {
     if (typeof vacation == "object") {
@@ -207,11 +233,29 @@ var getWeather = function (vacation) {
                     eachWeatherData.main.temp_min,
                     eachWeatherData.main.temp_max,
                     eachWeatherData.main.humidity,
-                    eachWeatherData.weather[0].description);
+                    eachWeatherData.weather[0].description,
+                    getImageToDisplay(eachWeatherData)
+                );
+                console.log(weather);
                 weatherData.push(weather);
             };
+            console.log(weather);
             vacation.weatherData = weatherData;
         });
+    }
+}
+
+function renderWeatherData(vacation) {
+    try {
+        $('.currentWeather').attr('src', './assets/images/weather/'+vacation.weatherData[0].image);
+        $('.temp').text(vacation.weatherData[0].temperature);
+        $('.description').text(vacation.weatherData[0].description);
+        $('.humidity').text(vacation.weatherData[0].humidity);
+        $('.MaxAndMin').text(vacation.weatherData[0].max+'/'+vacation.weatherData[0].min);
+        $('.city').text(vacation.weatherData[0].location);
+
+    } catch (e) {
+        console.log('Could display data:'+e);
     }
 }
 
@@ -295,6 +339,8 @@ $(".tabs").on("click", "a", function (event) {
     });
     showActivities(user.selectedVacation.activities);
     getWeather(user.selectedVacation);
+    renderWeatherData(user.selectedVacation);
+    pixabayAPI(user.selectedVacation.location);
 });
 
 
@@ -385,23 +431,26 @@ function initAutocomplete() {
         });
         map.fitBounds(bounds);
     });
-	
+
 }
 
 //Pixabay Photo API
-var pixURL = "https://pixabay.com/api/?q=Atlanta&image_type=photo&category=places&orientation=vertical&safesearch=true&order=popular&key=8561959-695370e3d9d8574348bbe6f72"
+function pixabayAPI (city){
+
+    var pixURL = "https://pixabay.com/api/?q=" + city +"&image_type=photo&category=places&orientation=vertical&safesearch=true&order=popular&key=8561959-695370e3d9d8574348bbe6f72"
 
 $.ajax({
     url: pixURL,
     method: "GET"
-  }).then(function(response) {
+}).then(function (response) {
     console.log(response);
 
     // for(i = 0; i < response.hits.length; i++){
-        var imageURL = response.hits[0].webformatURL;
-        console.log("ImageURL " + imageURL);
-        newImage = $("<img>");
-        $(newImage).attr("src", imageURL);
-        $(newImage).attr("width", 500)
-        $("#photo-feed").append(newImage);
-    });
+    var imageURL = response.hits[0].webformatURL;
+    console.log("ImageURL " + imageURL);
+    newImage = $("<img>");
+    $(newImage).attr("src", imageURL);
+    $(newImage).attr("width", 500)
+    $("#photo-feed").append(newImage);
+});
+}
