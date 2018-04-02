@@ -120,17 +120,19 @@ ul li:hover {
 }
 
 .close {
-  cursor: pointer;
-  top: 50%;
-  right: 0%;
-  padding: 12px 5px;
-  transform: translate(0%, -50%);
-  font-size: 1em;
-  font-weight: lighter;
-  vertical-align: top;
-  text-align: center;
+    cursor: pointer;
+    /* top: 50%; */
+    right: 0%;
+    /* padding: 12px 5px; */
+    /* transform: translate(0%, -50%); */
+    font-size: 1em;
+    font-weight: lighter;
+    /* vertical-align: top; */
+    text-align: center;
+    background: none;
+    border: none;
+    color: white;
 }
-
 .close:hover {
   /*	background: #bbb;*/
 }
