@@ -306,9 +306,9 @@ $("#city-input").on("keyup", function (event) {
         // Trigger the button element with a click
         $("#vacation-adder").click();
 
-          //Get the vacation city
-          var cityInput = $("#city-input");
-          newCity = cityInput.val().trim();  
+        //Get the vacation city
+        var cityInput = $("#city-input");
+        newCity = cityInput.val().trim();
 
         //Create new Vacation instance based on newCity
         var vacation = new Vacation(newCity, newCity, []);
@@ -342,19 +342,20 @@ function retrieveFromDatabase() {
     ref.once("value")
         .then(function (snapshot) {
                 var dbUsers = snapshot.val().users;
-                var dbUser = dbUsers.find(function (each) {
-                    return each.name == user.name;
-                });
-
-                dbUser.vacations.forEach(function (dbVacation) {
-                    var vacation = new Vacation(dbVacation.location, dbVacation.location, []);
-                    dbVacation.activities.forEach(function (dbActivity) {
-                        var activity = new Activity(dbVacation.location, dbVacation.dateEntry, dbVacation.activityEntry, dbVacation.completed);
-                        vacation.addActivity(activity);
+                if (dbUsers) {
+                    var dbUser = dbUsers.find(function (each) {
+                        return each.name == user.name;
                     });
-                    user.addVacation(vacation);
-                });
 
+                    dbUser.vacations.forEach(function (dbVacation) {
+                        var vacation = new Vacation(dbVacation.location, dbVacation.location, []);
+                        dbVacation.activities.forEach(function (dbActivity) {
+                            var activity = new Activity(dbVacation.location, dbVacation.dateEntry, dbVacation.activityEntry, dbVacation.completed);
+                            vacation.addActivity(activity);
+                        });
+                        user.addVacation(vacation);
+                    });
+                }
                 // If any errors are experienced, log them to console.
             },
             function (errorObject) {
