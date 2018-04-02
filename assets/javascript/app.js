@@ -25,6 +25,12 @@ function Vacationer(name, password, vacations, selectedVacation) {
     this.addVacation = function (vacation) {
         this.vacations.push(vacation);
     };
+    this.deleteVacation = function () {
+        var index = this.vacations.index(this.selectedVacation);
+        this.vacations.splice(index, 1);
+        this.selectedVacation = null;
+        
+    }
     this.selectedVacation = selectedVacation;
     this.databaseObject = function () {
         var tempUser = {};
@@ -88,6 +94,7 @@ function onSignIn(googleUser) {
     var userDiv = $(".user");
     var userImage = $("<img>").attr("src", profile.getImageUrl());
     var userName = $("<p>").text(profile.getName());
+        userDiv.empty();
     userDiv.append(userImage);
     userDiv.append(userName);
 
@@ -127,6 +134,14 @@ $("#city-input").on("keyup", function (event) {
         $(cityList).append(cityLink);
         $(".tabs").append(cityList);
 
+        //Delete option to City input button
+
+        var deleteButton = $("<button>");
+        cityLink.prepend (deleteButton);
+        deleteButton.text ("✗");
+        deleteButton.addClass("close");
+        
+
         var vacation = new Vacation(newCity, newCity, []);
         user.addVacation(vacation);
         user.selectedVacation = vacation;
@@ -139,7 +154,13 @@ $("#city-input").on("keyup", function (event) {
 
     }
 });
+//Delete Vacation City
 
+$(document).on ("click", ".close", function (event) {
+    $(".tab").empty();
+    user.deleteVacation();
+
+})
 //show activity list for the selected vacation 
 function showActivities(activities) {
     var dateButtons = $("#date-buttons");
