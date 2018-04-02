@@ -1,6 +1,7 @@
 var geoLocation;
 var map;
 var newCity;
+var latit = "lat:";
 
 
 // Initialize Firebase
@@ -22,16 +23,20 @@ function Vacationer(name, password, vacations, selectedVacation) {
     this.vacations = vacations;
     this.name = name;
     this.password = password;
+    this.selectedVacation = selectedVacation;
     this.addVacation = function (vacation) {
         this.vacations.push(vacation);
     };
-    this.deleteVacation = function () {
-        var index = this.vacations.index(this.selectedVacation);
+    this.deleteVacation = function (locationToDelete) {
+        var vacationToDelete = this.vacations.find(function (each) {
+            return each.location == locationToDelete
+        });
+        var index = this.vacations.indexOf(vacationToDelete);
         this.vacations.splice(index, 1);
-        this.selectedVacation = null;
-        
+        if (vacationToDelete == user.selectionVacation) {
+            this.selectedVacation = null
+        };
     }
-    this.selectedVacation = selectedVacation;
     this.databaseObject = function () {
         var tempUser = {};
         tempUser.name = this.name;
@@ -50,10 +55,10 @@ function Vacation(name, location, weatherData) {
         this.activities = [],
         this.weatherData = weatherData,
         this.addActivity = function (activity) {
-            this.activities.push(activity),
-                this.deleteActivity = function (activity, index) {
-                    this.activities.splice(index, 1);
-                }
+            this.activities.push(activity);
+        },
+        this.deleteActivity = function (index) {
+            this.activities.splice(index, 1);
         },
         this.databaseObject = function () {
             var tempVacation = {};
@@ -94,7 +99,7 @@ function onSignIn(googleUser) {
     var userDiv = $(".user");
     var userImage = $("<img>").attr("src", profile.getImageUrl());
     var userName = $("<p>").text(profile.getName());
-        userDiv.empty();
+    userDiv.empty();
     userDiv.append(userImage);
     userDiv.append(userName);
 
@@ -102,71 +107,51 @@ function onSignIn(googleUser) {
     user.name = profile.getName();
 }
 
-
 //Function to clear entry fields upon clicking submit
 function clearAdd() {
     $("#date").val("");
     $("#activity").val("");
 }
 
-//Create click event function for city input bar
-// Execute a function when the user releases a key on the keyboard
-$("#city-input").on("keyup", function (event) {
-    // Cancel the default action, if needed
-    event.preventDefault();
+function displayCityButtons() {
+    //Click handler for physical button (Can delete when enter key works)
+    //   $("#vacation-adder").on("click", function (event) {
+    //     event.preventDefault();
+    var tabsDiv = $(".tabs");
+    tabsDiv.empty();
+    user.vacations.forEach(function (vacation) {
+        var newCity = vacation.location;
+        var cityList = $("<li>");
+        cityList.attr("class", "tab");
+        var cityDiv = $("<div>");
+        cityDiv.attr("class", "city-div");
 
-    // Number 13 is the "Enter" key on the keyboard
-    if (event.keyCode === 13) {
-        // Trigger the button element with a click
-        $("#vacation-adder").click();
+        var cityLink = $("<button>");
+        cityLink.attr("class", "a-tag");
+        cityLink.attr("id", newCity);
 
-        //Click handler for physical button (Can delete when enter key works)
-        //   $("#vacation-adder").on("click", function (event) {
-        //     event.preventDefault();
+        //Delete button
+        var deleteButton = $("<button>");
+        cityDiv.append(deleteButton);
+        deleteButton.text("✗");
+        deleteButton.addClass("close");
 
-        var cityInput = $("#city-input");
-       newCity = cityInput.val().trim();
-       var cityDiv = $("<div>");
-       var cityList = $("<li>");
-       var cityLink = $("<a>");
-       cityList.attr("class", "tab");
-       cityDiv.attr("class", "city-div");
-       cityLink.attr("id", newCity);
-       cityLink.attr("class", "a-tag");
-       cityLink.text(newCity);
-       cityDiv.append(cityLink);
-       cityList.append(cityDiv);
-       $(".tabs").append(cityList);
+        //Set the text on the city button
+        cityLink.text(newCity);
 
-       //Delete option to City input button
+        cityDiv.append(cityLink);
+        cityList.append(cityDiv);
+        tabsDiv.append(cityList);
+    })
 
-       var deleteButton = $("<button>");
-       cityDiv.append(deleteButton);
-       deleteButton.text ("✗");
-       deleteButton.addClass("close");
-        
+}
 
-        var vacation = new Vacation(newCity, newCity, []);
-        user.addVacation(vacation);
-        user.selectedVacation = vacation;
-        console.log("Selected: "); 
-        console.log(user.selectedVacation);
-
-        geoCoding(newCity);
-        getWeather(user.selectedVacation);
-
-        //clear city-input
-        cityInput.val("");
-
-    }
-});
 //Delete Vacation City
-
-$(document).on ("click", ".close", function (event) {
-    $(".tab").empty();
+$(document).on("click", ".close", function (event) {
     user.deleteVacation();
+    displayVacationCities();
+});
 
-})
 //show activity list for the selected vacation 
 function showActivities(activities) {
     var dateButtons = $("#date-buttons");
@@ -179,8 +164,6 @@ function showActivities(activities) {
 
         //show activity date
         var dateDiv = $("<div>");
-        $(dateDiv).attr()
-
         dateDiv.append($("<p>").text(activity.date));
         dateButtons.append(dateDiv);
 
@@ -201,8 +184,7 @@ function showActivities(activities) {
     });
 };
 
-var latit = "lat:" +
-function deleteActivity(user, activityNumber) {
+function deleteActivity(activityNumber) {
     user.selectedVacation.deleteActivity(activityNumber);
 }
 
@@ -223,7 +205,8 @@ function getImageToDisplay(data) {
         data.weather.forEach(function (weather) {
             if (weather.main.includes('clouds') || weather.main.includes('cloud') || weather.description.includes('clouds') || weather.description.includes('cloud')) {
                 result = "cloudy.png";
-            } if (weather.main.includes("rain") || weather.description.includes('rain')) {
+            }
+            if (weather.main.includes("rain") || weather.description.includes('rain')) {
                 result = "rainy.png";
 
             }
@@ -240,6 +223,7 @@ function getImageToDisplay(data) {
         return "undefined.png";
     }
 }
+
 //get weather from Weather API
 var getWeather = function (vacation) {
     if (typeof vacation == "object") {
@@ -275,17 +259,54 @@ var getWeather = function (vacation) {
 
 function renderWeatherData(vacation) {
     try {
-        $('.currentWeather').attr('src', './assets/images/weather/'+vacation.weatherData[0].image);
+        $('.currentWeather').attr('src', './assets/images/weather/' + vacation.weatherData[0].image);
         $('.temp').text(vacation.weatherData[0].temperature + "°F");
         $('.description').text(vacation.weatherData[0].description);
         $('.humidity').text(vacation.weatherData[0].humidity + "%");
-        $('.MaxAndMin').text("H"+vacation.weatherData[0].max+'° / L'+vacation.weatherData[0].min +"°");
+        $('.MaxAndMin').text("H" + vacation.weatherData[0].max + '° / L' + vacation.weatherData[0].min + "°");
         $('.city').text(vacation.weatherData[0].location);
 
     } catch (e) {
-        console.log('Could display data:'+e);
+        console.log('Could display data:' + e);
     }
 }
+
+function updateDisplay() {
+    showActivities(user.selectedVacation.activities);
+    getWeather(user.selectedVacation);
+    renderWeatherData(user.selectedVacation);
+    pixabayAPI(user.selectedVacation.location);
+    geoCoding(user.selectedVacation.location);
+}
+
+//Create click event function for city input bar
+// Execute a function when the user releases a key on the keyboard
+$("#city-input").on("keyup", function (event) {
+    // Cancel the default action, if needed
+    event.preventDefault();
+
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+        // Trigger the button element with a click
+        $("#vacation-adder").click();
+
+          //Get the vacation city
+          var cityInput = $("#city-input");
+          newCity = cityInput.val().trim();  
+
+        //Create new Vacation instance based on newCity
+        var vacation = new Vacation(newCity, newCity, []);
+        user.addVacation(vacation);
+        user.selectedVacation = vacation;
+
+        displayCityButtons();
+        updateDisplay();
+
+        //clear city-input
+        $("#city-input").val("");
+
+    }
+});
 
 function saveToDatabase() {
     database.ref().set(
@@ -314,23 +335,23 @@ function retrieveFromDatabase() {
 }
 
 // retrieveFromDatabase();
-
 console.log(user.databaseObject());
 console.log(user);
-
 
 //Create click event function for activity entry form
 $("#add-button").on("click", function (event) {
     event.preventDefault();
     var dateEntry = $("#date").val().trim();
     var activityEntry = $("#activity").val().trim();
-    if ((dateEntry != "") && (activityEntry != "")) {
+    if ((dateEntry != "") && (activityEntry != "") && (user.selectedVacation)) {
+
         var activity = new Activity(user.selectedVacation.location, dateEntry, activityEntry, false);
         user.selectedVacation.addActivity(activity);
+
         showActivities(user.selectedVacation.activities);
         clearAdd();
         saveToDatabase();
-        console.log("Clicked");
+
     }
 })
 
@@ -353,55 +374,30 @@ function geoCoding(city) {
         method: 'GET',
     }).then(function (response) {
         geoLocation = response.results[0].geometry.location;
-        console.log(geoLocation);
         mapSetCenter(geoLocation);
     });
 }
 
 //select a vacation city
-$(".tabs").on("click", "a", function (event) {
+$(".tabs").on("click", "button", function (event) {
     event.preventDefault();
     var city = $(this).text();
-<<<<<<< HEAD
-
-=======
-    console.log("City" + city);
-    console.log(user);
-    geoCoding(city);
->>>>>>> 4a6424eaca46abe24a554239168bd9a2fb521f06
     user.selectedVacation = user.vacations.find(function (each) {
         return each.location == city;
-
     });
-    console.log("Selected Vacation: " + user.selectedVacation);
-    showActivities(user.selectedVacation.activities);
-    getWeather(user.selectedVacation);
-    renderWeatherData(user.selectedVacation);
-    pixabayAPI(user.selectedVacation.location);
-    geoCoding(user.selectedVacation.location);
-    
+    updateDisplay();
 });
 
-
+//set the center of the city
 function mapSetCenter() {
-
     if (map !== undefined && typeof map === "object") {
         map.setCenter(geoLocation);
     } else {
         mapSetCenter();
     }
-
-    // or we can run this  checkLoop:
-
-    // try {
-    //     map.setCenter(geoLocation);
-    // } catch (error) {
-    //     console.log(error);
-    //     mapSetCenter();
-    // }
-
 }
 
+//Google map 
 function initAutocomplete() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
@@ -474,23 +470,23 @@ function initAutocomplete() {
 }
 
 //Pixabay Photo API
-function pixabayAPI (city){
+function pixabayAPI(city) {
 
-    var pixURL = "https://pixabay.com/api/?q=" + city +"&image_type=photo&category=places&orientation=horizontal&safesearch=true&order=popular&key=8561959-695370e3d9d8574348bbe6f72"
+    var pixURL = "https://pixabay.com/api/?q=" + city + "&image_type=photo&category=places&orientation=horizontal&safesearch=true&order=popular&key=8561959-695370e3d9d8574348bbe6f72"
 
-$.ajax({
-    url: pixURL,
-    method: "GET"
-}).then(function (response) {
-    console.log(response);
+    $.ajax({
+        url: pixURL,
+        method: "GET"
+    }).then(function (response) {
+        console.log(response);
 
-    // for(i = 0; i < response.hits.length; i++){
-    var imageURL = response.hits[0].webformatURL;
-    console.log("ImageURL " + imageURL);
-    newImage = $("<img>");
-    $(newImage).attr("src", imageURL);
-    $(newImage).attr("width", 500)
-    $(newImage).attr("id", "city-pic")
-    $("#photo-feed").html(newImage);
-});
+        // for(i = 0; i < response.hits.length; i++){
+        var imageURL = response.hits[0].webformatURL;
+        console.log("ImageURL " + imageURL);
+        newImage = $("<img>");
+        $(newImage).attr("src", imageURL);
+        $(newImage).attr("width", 500)
+        $(newImage).attr("id", "city-pic")
+        $("#photo-feed").html(newImage);
+    });
 }

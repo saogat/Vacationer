@@ -150,9 +150,6 @@ ul li:hover {
   vertical-align: top;
   
  }
-.close:hover {
-  /*	background: #bbb;*/
-}
 
 .tabs li {
   /*	display:inline;*/
@@ -174,10 +171,10 @@ ul li:hover {
 .tabs .tab a {
   color: white;
 } 
-/* .city-div {
-  overflow: auto;
-  display: inline;
-} */
+.city-div {
+  margin-top: 10px;
+  margin-right: 20px;
+}
 
 /*********************************** OpenWeather API styling ******************************************/
 
