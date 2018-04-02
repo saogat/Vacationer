@@ -174,6 +174,7 @@ function showActivities(activities) {
     });
 };
 
+var latit = "lat:" +
 function deleteActivity(user, activityNumber) {
     user.selectedVacation.deleteActivity(activityNumber);
 }
@@ -248,10 +249,10 @@ var getWeather = function (vacation) {
 function renderWeatherData(vacation) {
     try {
         $('.currentWeather').attr('src', './assets/images/weather/'+vacation.weatherData[0].image);
-        $('.temp').text(vacation.weatherData[0].temperature);
+        $('.temp').text(vacation.weatherData[0].temperature + "°F");
         $('.description').text(vacation.weatherData[0].description);
-        $('.humidity').text(vacation.weatherData[0].humidity);
-        $('.MaxAndMin').text(vacation.weatherData[0].max+'/'+vacation.weatherData[0].min);
+        $('.humidity').text(vacation.weatherData[0].humidity + "%");
+        $('.MaxAndMin').text("H"+vacation.weatherData[0].max+'° / L'+vacation.weatherData[0].min +"°");
         $('.city').text(vacation.weatherData[0].location);
 
     } catch (e) {
@@ -333,7 +334,7 @@ function geoCoding(city) {
 $(".tabs").on("click", "a", function (event) {
     event.preventDefault();
     var city = $(this).text();
-    geoCoding(city);
+
     user.selectedVacation = user.vacations.find(function (each) {
         return each.location == city
     });
@@ -341,6 +342,8 @@ $(".tabs").on("click", "a", function (event) {
     getWeather(user.selectedVacation);
     renderWeatherData(user.selectedVacation);
     pixabayAPI(user.selectedVacation.location);
+    geoCoding(user.selectedVacation.location);
+    
 });
 
 
