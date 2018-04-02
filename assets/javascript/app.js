@@ -152,6 +152,7 @@ function showActivities(activities) {
 
         //show activity date
         var dateDiv = $("<div>");
+        $(dateDiv).attr()
 
         dateDiv.append($("<p>").text(activity.date));
         dateButtons.append(dateDiv);
@@ -339,6 +340,7 @@ $(".tabs").on("click", "a", function (event) {
     showActivities(user.selectedVacation.activities);
     getWeather(user.selectedVacation);
     renderWeatherData(user.selectedVacation);
+    pixabayAPI(user.selectedVacation.location);
 });
 
 
@@ -433,7 +435,9 @@ function initAutocomplete() {
 }
 
 //Pixabay Photo API
-var pixURL = "https://pixabay.com/api/?q=Atlanta&image_type=photo&category=places&orientation=vertical&safesearch=true&order=popular&key=8561959-695370e3d9d8574348bbe6f72"
+function pixabayAPI (city){
+
+    var pixURL = "https://pixabay.com/api/?q=" + city +"&image_type=photo&category=places&orientation=vertical&safesearch=true&order=popular&key=8561959-695370e3d9d8574348bbe6f72"
 
 $.ajax({
     url: pixURL,
@@ -449,3 +453,4 @@ $.ajax({
     $(newImage).attr("width", 500)
     $("#photo-feed").append(newImage);
 });
+}
