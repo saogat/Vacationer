@@ -179,6 +179,7 @@ $(document).on("click", ".close", function (event) {
 function showActivities(activities) {
     var dateButtons = $("#date-buttons");
     var toDoDiv = $("#to-do-list");
+    var timeButtons = $("#time-buttons");
     dateButtons.empty();
     toDoDiv.empty();
 
@@ -188,8 +189,12 @@ function showActivities(activities) {
         //show activity date and time
         var dateDiv = $("<div>");
         dateDiv.append($("<p>").text(activity.date));
-        dateDiv.append($("<p>").text(activity.time));
         dateButtons.append(dateDiv);
+
+        //show activity time
+        var timeDiv = $("<div>");
+        timeDiv.append($("<p>").text(activity.time));
+        timeButtons.append(timeDiv);
 
         //show activity description
         var activityDiv = $("<div>");
