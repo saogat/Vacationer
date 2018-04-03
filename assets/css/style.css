@@ -67,15 +67,18 @@
 
 #date-header {
   color: black;
-  text-align: center;
+  /* text-align: center; */
   font-size: 20px;
 }
 
 #activity-header {
   color: black;
-  text-align: center;
+  /* text-align: center; */
   font-size: 20px;
   border-bottom: #414141;
+}
+#activity-header p {
+  text-align: left;
 }
 
 #photo-feed {
