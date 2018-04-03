@@ -161,6 +161,10 @@ ul li:hover {
 
 .a-tag{
   float:left;
+  background-color: transparent;
+  border: none;
+  color: white;
+  padding-top: 5px;
 }
 
 .close {
