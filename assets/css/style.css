@@ -1,3 +1,4 @@
+
 #panel {
   background-color: lightgoldenrodyellow;
   padding-top: 20px;
@@ -180,42 +181,42 @@ ul li:hover {
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300');
 .city {
-  position: absolute;
-  top: 25px;
-  left: 25px;
-  background: none;
-  color: #fff;
-  font-size: 2em;
+    position: absolute;
+    top: 12px;
+    left: 25px;
+    background: none;
+    color: #fff;
+    font-size: 3em;
 }
 
 .description {
-  position: absolute;
-  top: 68px;
-  left: 25px;
-  background: none;
-  color: #fff;
-  font-size: 1.1em;
+    position: absolute;
+    top: 67px;
+    left: 25px;
+    background: none;
+    color: #fff;
+    font-size: 1.3em;
 }
 
 .weatherData {
-  color: #fff;
-  position: absolute;
-  top: 25%;
-  left: 5%;
-  font-size: 1.3em;
+    color: #fff;
+    position: absolute;
+    top: 25%;
+    left: 3%;
+    font-size: 2em;
 }
 
 .humidityIcon{
-width:20px;
-float: left;
-margin: 3px;
+    width:20px;
+    float: left;
+    margin: 3px;
 }
 
 .currentWeather {
-  position: absolute;
-  top: 18%;
-  left: 20%;
-  width: 70%;
+    position: absolute;
+    top: 18%;
+    left: 20%;
+    width: 70%;
 }
 
 .days {
@@ -227,14 +228,12 @@ margin: 3px;
   justify-content: center;
 }
 
-
-
 .temp {
-  color: #fff;
-  position: absolute;
-  top: 25px;
-  right: 5%;
-  font-size: 2.5em;
+    color: #fff;
+    position: absolute;
+    top: 0px;
+    right: 5%;
+    font-size: 4.5em;
 }
 
 .day {
