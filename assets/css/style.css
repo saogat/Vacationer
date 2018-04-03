@@ -262,7 +262,7 @@ ul li:hover {
 
 .weatherbox {
   font-family: 'Open Sans Condensed', sans-serif;
-  border-radius: 25px;
+  /* border-radius: 25px; */
   position: relative;
   width: 600px;
   height: 400px;
