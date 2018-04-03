@@ -1,7 +1,7 @@
 
 .g-signin2 {
   width: auto;
-  height: 120px;
+  /* height: 120px; */
   background-color: white;
   text-shadow: none;
 }
@@ -107,6 +107,7 @@
   position: absolute;
   right: 0px;
   overflow: auto;
+  object-fit: cover;
 }
 
 #city-pic{
