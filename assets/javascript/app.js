@@ -1,6 +1,7 @@
 var geoLocation;
 var map;
 var newCity;
+var dbUserRef;
 
 // Initialize Firebase
 var config = {
@@ -87,7 +88,6 @@ function Activity(location, date, time, description, completed = false) {
         }
 }
 
-
 //Vacationers constructor
 function Vacationers(users = []) {
     this.users = users;
@@ -112,10 +112,6 @@ var users = vacationers.databaseObject().users;
 //Google signon
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
-    // console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    // console.log('Name: ' + profile.getName());
-    // console.log('Image URL: ' + profile.getImageUrl());
-    // console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     var userDiv = $(".user");
     var userImage = $("<img>").attr("src", profile.getImageUrl());
     var userName = $("<p>").attr("id", "signon-id").text(profile.getName());
@@ -165,12 +161,12 @@ function displayCityButtons() {
         cityList.append(cityDiv);
         tabsDiv.append(cityList);
     })
-
 }
 
 //Delete Vacation City
 $(document).on("click", ".close", function (event) {
     user.deleteVacation();
+    saveToDatabase();
     displayCityButtons();
 });
 
@@ -215,6 +211,7 @@ function showActivities(activities) {
 
 function deleteActivity(activityNumber) {
     user.selectedVacation.deleteActivity(activityNumber);
+    saveToDatabase();
 }
 
 function Weather(location, temperature, min, max, humidity, description, image) {
@@ -337,29 +334,29 @@ $("#city-input").on("keyup", function (event) {
 });
 
 function saveToDatabase() {
-    database.ref("users").push(user.databaseObject());
-}
 
-// function saveToDatabase() {
-//     database.ref().set(
-//         vacationers.databaseObject()
-//     )
-// }
+    if (dbUserRef) {
+        removeDbUser();
+    };
+    firebase.database().ref('users').push(user.databaseObject());
+}
 
 function retrieveFromDatabase() {
     var ref = firebase.database().ref("users");
-    ref.on("value", function (snapshot) {
+
+    ref.once("value", function (snapshot) {
         var dbUsers = [];
         snapshot.forEach(function (childSnapshot) {
-            dbUsers.push(childSnapshot.val());
+            dbUsers.push(childSnapshot);
         });
         // console.log(dbUsers);
         if (dbUsers) {
-            var dbUser = dbUsers.find(function (each) {
-                return each.name == user.name;
+            var dbUserS = dbUsers.find(function (each) {
+                return each.val().name == user.name;
             });
 
-            if (dbUser) {
+            if (dbUserS) {
+                var dbUser = dbUserS.val();
                 if (dbUser.vacations) {
                     dbUser.vacations.forEach(function (dbVacation) {
                         var vacation = new Vacation(dbVacation.location, dbVacation.location, []);
@@ -375,10 +372,21 @@ function retrieveFromDatabase() {
                     displayCityButtons();
                     updateDisplay();
                 }
+                dbUserRef = dbUserS.ref;
             }
         }
     })
 
+}
+
+function removeDbUser() {
+    dbUserRef.remove()
+        .then(function () {
+            console.log("Remove succeeded.")
+        })
+        .catch(function (error) {
+            console.log("Remove failed: " + error.message)
+        });
 }
 
 //Create click event function for activity entry form
@@ -395,7 +403,6 @@ $("#add-button").on("click", function (event) {
         showActivities(user.selectedVacation.activities);
         clearAdd();
         saveToDatabase();
-
     }
 })
 
