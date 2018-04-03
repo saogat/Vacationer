@@ -354,26 +354,26 @@ function retrieveFromDatabase() {
         snapshot.forEach(function (childSnapshot) {
             dbUsers.push(childSnapshot.val());
         });
-        console.log(dbUsers);
+        // console.log(dbUsers);
         if (dbUsers) {
             var dbUser = dbUsers.find(function (each) {
                 return each.name == user.name;
             });
 
             if (dbUser) {
-                dbUser.vacations.forEach(function (dbVacation) {
-                    var vacation = new Vacation(dbVacation.location, dbVacation.location, []);
-                    dbVacation.activities.forEach(function (dbActivity) {
-                        var activity = new Activity(dbActivity.location, dbActivity.date, dbActivity.time, dbActivity.description, dbActivity.completed);
-                        vacation.addActivity(activity);
+                if (dbUser.vacations) {
+                    dbUser.vacations.forEach(function (dbVacation) {
+                        var vacation = new Vacation(dbVacation.location, dbVacation.location, []);
+                        dbVacation.activities.forEach(function (dbActivity) {
+                            var activity = new Activity(dbActivity.location, dbActivity.date, dbActivity.time, dbActivity.description, dbActivity.completed);
+                            vacation.addActivity(activity);
+                        });
+                        user.addVacation(vacation);
                     });
-                    user.addVacation(vacation);
-                });
-                console.log(dbUser);
-                user.selectedVacation = user.vacations[0];
-                displayCityButtons();
-                updateDisplay();
-                console.log(user);
+                    user.selectedVacation = user.vacations[0];
+                    displayCityButtons();
+                    updateDisplay();
+                }
             }
         }
     })
