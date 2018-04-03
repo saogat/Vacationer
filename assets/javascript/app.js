@@ -172,7 +172,7 @@ function displayCityButtons() {
 //Delete Vacation City
 $(document).on("click", ".close", function (event) {
     user.deleteVacation();
-    displayVacationCities();
+    displayCityButtons();
 });
 
 //show activity list for the selected vacation 
@@ -300,10 +300,12 @@ function renderWeatherData(vacation) {
 }
 
 function updateDisplay() {
-    showActivities(user.selectedVacation.activities);
-    getWeather(user.selectedVacation);
-    pixabayAPI(user.selectedVacation.location);
-    geoCoding(user.selectedVacation.location);
+    if (user.selectedVacation) {
+        showActivities(user.selectedVacation.activities);
+        getWeather(user.selectedVacation);
+        pixabayAPI(user.selectedVacation.location);
+        geoCoding(user.selectedVacation.location);
+    }
 }
 
 //Create click event function for city input bar
@@ -336,14 +338,14 @@ $("#city-input").on("keyup", function (event) {
 });
 
 function saveToDatabase() {
-    database.ref().set(user.databaseObject());
+    database.ref().update(user.databaseObject());
 }
 
-function saveToDatabase() {
-    database.ref().set(
-        vacationers.databaseObject()
-    )
-}
+// function saveToDatabase() {
+//     database.ref().set(
+//         vacationers.databaseObject()
+//     )
+// }
 
 function retrieveFromDatabase() {
     var ref = firebase.database().ref("users");
