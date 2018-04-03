@@ -1,8 +1,14 @@
 
+.g-signin2 {
+  width: 200px;
+}
+
 #panel {
   background-color: lightgoldenrodyellow;
   padding-top: 20px;
   padding-bottom: 30px;
+  width: 350px;
+  margin-left: 20px;
 }
 
 .nav-extended {
@@ -63,6 +69,7 @@
   background-size: cover;
   background-position: center;
   position: relative;
+  margin-left: 20px;
 }
 
 #date-header {
@@ -185,7 +192,11 @@ ul li:hover {
   margin-top: 10px;
   margin-right: 20px;
 }
-
+.connectedo591rl1cb7ta {
+  text-shadow: none;
+  align-content: center;
+  align-items: center;
+}
 /*********************************** OpenWeather API styling ******************************************/
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300');
