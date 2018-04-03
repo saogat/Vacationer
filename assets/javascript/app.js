@@ -337,7 +337,7 @@ $("#city-input").on("keyup", function (event) {
 });
 
 function saveToDatabase() {
-    database.ref().update(user.databaseObject());
+    database.ref("users").push(user.databaseObject());
 }
 
 // function saveToDatabase() {
@@ -348,34 +348,35 @@ function saveToDatabase() {
 
 function retrieveFromDatabase() {
     var ref = firebase.database().ref("users");
-    ref.once("value").then(function (snapshot) {
-            var dbUsers = snapshot.val();
-            console.log(dbUsers);
-            if (dbUsers) {
-                var dbUser = dbUsers.find(function (each) {
-                    return each.name == user.name;
-                });
-                if (dbUser) {
-                    dbUser.vacations.forEach(function (dbVacation) {
-                        var vacation = new Vacation(dbVacation.location, dbVacation.location, []);
-                        dbVacation.activities.forEach(function (dbActivity) {
-                            var activity = new Activity(dbActivity.location, dbActivity.date, dbActivity.time, dbActivity.description, dbActivity.completed);
-                            vacation.addActivity(activity);
-                        });
-                        user.addVacation(vacation);
-                    });
-                    console.log(dbUser);
-                    user.selectedVacation = user.vacations[0];
-                    displayCityButtons();
-                    updateDisplay();
-                    console.log(user);
-                }
-            }
-        },
-        function (errorObject) {
-            // If any errors are experienced, log them to console.
-            console.log("The read failed: " + errorObject.code);
+    ref.on("value", function (snapshot) {
+        var dbUsers = [];
+        snapshot.forEach(function (childSnapshot) {
+            dbUsers.push(childSnapshot.val());
         });
+        console.log(dbUsers);
+        if (dbUsers) {
+            var dbUser = dbUsers.find(function (each) {
+                return each.name == user.name;
+            });
+
+            if (dbUser) {
+                dbUser.vacations.forEach(function (dbVacation) {
+                    var vacation = new Vacation(dbVacation.location, dbVacation.location, []);
+                    dbVacation.activities.forEach(function (dbActivity) {
+                        var activity = new Activity(dbActivity.location, dbActivity.date, dbActivity.time, dbActivity.description, dbActivity.completed);
+                        vacation.addActivity(activity);
+                    });
+                    user.addVacation(vacation);
+                });
+                console.log(dbUser);
+                user.selectedVacation = user.vacations[0];
+                displayCityButtons();
+                updateDisplay();
+                console.log(user);
+            }
+        }
+    })
+
 }
 
 //Create click event function for activity entry form
@@ -439,5 +440,3 @@ function mapSetCenter() {
         mapSetCenter();
     }
 }
-
-// retrieveFromDatabase()
