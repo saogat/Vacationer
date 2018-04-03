@@ -363,10 +363,12 @@ function retrieveFromDatabase() {
                 if (dbUser.vacations) {
                     dbUser.vacations.forEach(function (dbVacation) {
                         var vacation = new Vacation(dbVacation.location, dbVacation.location, []);
-                        dbVacation.activities.forEach(function (dbActivity) {
-                            var activity = new Activity(dbActivity.location, dbActivity.date, dbActivity.time, dbActivity.description, dbActivity.completed);
-                            vacation.addActivity(activity);
-                        });
+                        if (dbVacation.activities) {
+                            dbVacation.activities.forEach(function (dbActivity) {
+                                var activity = new Activity(dbActivity.location, dbActivity.date, dbActivity.time, dbActivity.description, dbActivity.completed);
+                                vacation.addActivity(activity);
+                            });
+                        };
                         user.addVacation(vacation);
                     });
                     user.selectedVacation = user.vacations[0];
