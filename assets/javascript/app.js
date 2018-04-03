@@ -1,7 +1,6 @@
 var geoLocation;
 var map;
 var newCity;
-var latit = "lat:";
 
 // Initialize Firebase
 var config = {
