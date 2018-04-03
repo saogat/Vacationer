@@ -88,7 +88,6 @@ function Activity(location, date, time, description, completed = false) {
         }
 }
 
-
 //Vacationers constructor
 function Vacationers(users = []) {
     this.users = users;
@@ -113,10 +112,6 @@ var users = vacationers.databaseObject().users;
 //Google signon
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
-    // console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    // console.log('Name: ' + profile.getName());
-    // console.log('Image URL: ' + profile.getImageUrl());
-    // console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     var userDiv = $(".user");
     var userImage = $("<img>").attr("src", profile.getImageUrl());
     var userName = $("<p>").text(profile.getName());
@@ -166,12 +161,12 @@ function displayCityButtons() {
         cityList.append(cityDiv);
         tabsDiv.append(cityList);
     })
-
 }
 
 //Delete Vacation City
 $(document).on("click", ".close", function (event) {
     user.deleteVacation();
+    saveToDatabase();
     displayCityButtons();
 });
 
@@ -216,6 +211,7 @@ function showActivities(activities) {
 
 function deleteActivity(activityNumber) {
     user.selectedVacation.deleteActivity(activityNumber);
+    saveToDatabase();
 }
 
 function Weather(location, temperature, min, max, humidity, description, image) {
@@ -340,19 +336,10 @@ $("#city-input").on("keyup", function (event) {
 function saveToDatabase() {
 
     if (dbUserRef) {
-        // dbUserRef.upadate(user.databaseObject());
         removeDbUser();
     };
-
     firebase.database().ref('users').push(user.databaseObject());
-
 }
-
-// function saveToDatabase() {
-//     database.ref().set(
-//         vacationers.databaseObject()
-//     )
-// }
 
 function retrieveFromDatabase() {
     var ref = firebase.database().ref("users");
@@ -385,11 +372,7 @@ function retrieveFromDatabase() {
                     displayCityButtons();
                     updateDisplay();
                 }
-
-
                 dbUserRef = dbUserS.ref;
-
-
             }
         }
     })
@@ -420,7 +403,6 @@ $("#add-button").on("click", function (event) {
         showActivities(user.selectedVacation.activities);
         clearAdd();
         saveToDatabase();
-
     }
 })
 
@@ -467,5 +449,3 @@ function mapSetCenter() {
         mapSetCenter();
     }
 }
-
-retrieveFromDatabase();
