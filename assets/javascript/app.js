@@ -18,7 +18,9 @@ firebase.initializeApp(config);
 var database = firebase.database();
 
 
-//Global variable object
+//Domain objects
+
+//Vacationer constructor
 function Vacationer(name, vacations = [], selectedVacation) {
     this.vacations = vacations;
     this.name = name;
@@ -46,7 +48,7 @@ function Vacationer(name, vacations = [], selectedVacation) {
     }
 }
 
-//Create object contructor for vacation
+//Vacation contructor
 function Vacation(name, location, weatherData) {
     this.name = name,
         this.location = location,
@@ -68,7 +70,7 @@ function Vacation(name, location, weatherData) {
         }
 };
 
-//Create object constructor for activity
+//Activity constructor
 function Activity(location, date, description, completed = false) {
     this.location = location,
         this.date = date,
@@ -84,6 +86,8 @@ function Activity(location, date, description, completed = false) {
         }
 }
 
+
+//Vacationers constructor
 function Vacationers(users = []) {
     this.users = users;
     this.addUser = function (user) {
@@ -224,7 +228,6 @@ function getImageToDisplay(data) {
             }
             if (weather.main.includes("rain") || weather.description.includes('rain')) {
                 result = "rainy.png";
-
             }
             if (weather.main.includes("sun") || weather.description.includes('sun')) {
                 result = "sunny.png";
@@ -232,7 +235,6 @@ function getImageToDisplay(data) {
             if (weather.main.includes("snow") || weather.description.includes('snow')) {
                 result = "snow.png";
             }
-
         });
         return result;
     } else {
@@ -269,6 +271,7 @@ var getWeather = function (vacation) {
             };
             console.log(weather);
             vacation.weatherData = weatherData;
+            renderWeatherData(user.selectedVacation);
         });
     }
 }
@@ -281,16 +284,14 @@ function renderWeatherData(vacation) {
         $('.humidity').text(vacation.weatherData[0].humidity + "%");
         $('.MaxAndMin').text("H" + vacation.weatherData[0].max + '° / L' + vacation.weatherData[0].min + "°");
         $('.city').text(vacation.weatherData[0].location);
-
     } catch (e) {
-        console.log('Could display data:' + e);
+        console.log('Could not display data:' + e);
     }
 }
 
 function updateDisplay() {
     showActivities(user.selectedVacation.activities);
     getWeather(user.selectedVacation);
-    renderWeatherData(user.selectedVacation);
     pixabayAPI(user.selectedVacation.location);
     geoCoding(user.selectedVacation.location);
 }
@@ -325,9 +326,7 @@ $("#city-input").on("keyup", function (event) {
 });
 
 function saveToDatabase() {
-    database.ref().set(
-        user.databaseObject()
-    );
+    database.ref().set(user.databaseObject());
 }
 
 function saveToDatabase() {
@@ -338,29 +337,33 @@ function saveToDatabase() {
 
 function retrieveFromDatabase() {
     var ref = firebase.database().ref();
-
-    ref.once("value")
-        .then(function (snapshot) {
-                var dbUsers = snapshot.val().users;
-                if (dbUsers) {
-                    var dbUser = dbUsers.find(function (each) {
-                        return each.name == user.name;
-                    });
-
+    ref.once("value").then(function (snapshot) {
+            var dbUsers = snapshot.val().users;
+            if (dbUsers) {
+                var dbUser = dbUsers.find(function (each) {
+                    return each.name == user.name;
+                });
+                if (dbUser) {
                     dbUser.vacations.forEach(function (dbVacation) {
                         var vacation = new Vacation(dbVacation.location, dbVacation.location, []);
                         dbVacation.activities.forEach(function (dbActivity) {
-                            var activity = new Activity(dbVacation.location, dbVacation.dateEntry, dbVacation.activityEntry, dbVacation.completed);
+                            var activity = new Activity(dbActivity.location, dbActivity.date, dbActivity.description, dbActivity.completed);
                             vacation.addActivity(activity);
                         });
                         user.addVacation(vacation);
                     });
+                    console.log(dbUser);
+                    user.selectedVacation = user.vacations[0];
+                    displayCityButtons();
+                    updateDisplay();
+                    console.log(user);
                 }
-                // If any errors are experienced, log them to console.
-            },
-            function (errorObject) {
-                console.log("The read failed: " + errorObject.code);
-            });
+            }
+        },
+        function (errorObject) {
+            // If any errors are experienced, log them to console.
+            console.log("The read failed: " + errorObject.code);
+        });
 }
 
 //Create click event function for activity entry form
@@ -393,7 +396,9 @@ $("#to-do-list").on("click", ".checkbox", function (event) {
 //get map from Google API
 function geoCoding(city) {
     //whatever the name is from the button that has been clicked
-    var geocodingRequest = "https://maps.googleapis.com/maps/api/geocode/json?address=" + city + "&key=AIzaSyD6ro8ednBUBnAeYhcjizzp3NvEqFCScNs";
+    var geocodingRequest = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+    geocodingRequest += city;
+    geocodingRequest += "&key=AIzaSyD6ro8ednBUBnAeYhcjizzp3NvEqFCScNs";
     $.ajax({
         url: geocodingRequest,
         method: 'GET',
@@ -420,97 +425,4 @@ function mapSetCenter() {
     } else {
         mapSetCenter();
     }
-}
-
-//Google map API
-function initAutocomplete() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: {
-            lat: 33.7489954,
-            lng: -84.3879824
-        },
-        zoom: 13,
-        mapTypeId: 'roadmap'
-    });
-    console.log(map);
-    // Create the search box and link it to the UI element.
-    var input = document.getElementById('pac-input');
-    var searchBox = new google.maps.places.SearchBox(input);
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-    // Bias the SearchBox results towards current map's viewport.
-    map.addListener('bounds_changed', function () {
-        searchBox.setBounds(map.getBounds());
-    });
-
-    var markers = [];
-    // Listen for the event fired when the user selects a prediction and retrieve
-    // more details for that place.
-    searchBox.addListener('places_changed', function () {
-        var places = searchBox.getPlaces();
-
-        if (places.length == 0) {
-            return;
-        }
-
-        // Clear out the old markers.
-        markers.forEach(function (marker) {
-            marker.setMap(null);
-        });
-        markers = [];
-
-        // For each place, get the icon, name and location.
-        var bounds = new google.maps.LatLngBounds();
-        places.forEach(function (place) {
-            if (!place.geometry) {
-                console.log("Returned place contains no geometry");
-                return;
-            }
-            var icon = {
-                url: place.icon,
-                size: new google.maps.Size(71, 71),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(17, 34),
-                scaledSize: new google.maps.Size(25, 25)
-            };
-
-            // Create a marker for each place.
-            markers.push(new google.maps.Marker({
-                map: map,
-                icon: icon,
-                title: place.name,
-                position: place.geometry.location
-            }));
-
-            if (place.geometry.viewport) {
-                // Only geocodes have viewport.
-                bounds.union(place.geometry.viewport);
-            } else {
-                bounds.extend(place.geometry.location);
-            }
-        });
-        map.fitBounds(bounds);
-    });
-}
-
-//Pixabay Photo API
-function pixabayAPI(city) {
-
-    var pixURL = "https://pixabay.com/api/?q=" + city + "&image_type=photo&category=places&orientation=horizontal&safesearch=true&order=popular&key=8561959-695370e3d9d8574348bbe6f72"
-
-    $.ajax({
-        url: pixURL,
-        method: "GET"
-    }).then(function (response) {
-        console.log(response);
-
-        // for(i = 0; i < response.hits.length; i++){
-        var imageURL = response.hits[0].webformatURL;
-        console.log("ImageURL " + imageURL);
-        newImage = $("<img>");
-        $(newImage).attr("src", imageURL);
-        $(newImage).attr("width", 500)
-        $(newImage).attr("id", "city-pic")
-        $("#photo-feed").html(newImage);
-    });
 }
