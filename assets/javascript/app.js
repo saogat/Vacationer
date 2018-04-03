@@ -71,15 +71,17 @@ function Vacation(name, location, weatherData) {
 };
 
 //Activity constructor
-function Activity(location, date, description, completed = false) {
+function Activity(location, date, time, description, completed = false) {
     this.location = location,
         this.date = date,
+        this.time = time,
         this.description = description,
         this.completed = completed,
         this.databaseObject = function () {
             tempActivity = {};
             tempActivity.location = this.location;
             tempActivity.date = this.date;
+            tempActivity.time = this.time;
             tempActivity.description = this.description;
             tempActivity.completed = this.completed;
             return tempActivity;
@@ -111,10 +113,10 @@ var users = vacationers.databaseObject().users;
 //Google signon
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    // console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    // console.log('Name: ' + profile.getName());
+    // console.log('Image URL: ' + profile.getImageUrl());
+    // console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     var userDiv = $(".user");
     var userImage = $("<img>").attr("src", profile.getImageUrl());
     var userName = $("<p>").text(profile.getName());
@@ -130,6 +132,7 @@ function onSignIn(googleUser) {
 //Function to clear entry fields upon clicking submit
 function clearAdd() {
     $("#date").val("");
+    $("#time").val("");
     $("#activity").val("");
 }
 
@@ -182,9 +185,10 @@ function showActivities(activities) {
     var i = 0;
     activities.forEach(function (activity) {
 
-        //show activity date
+        //show activity date and time
         var dateDiv = $("<div>");
         dateDiv.append($("<p>").text(activity.date));
+        dateDiv.append($("<p>").text(activity.time));
         dateButtons.append(dateDiv);
 
         //show activity description
@@ -336,9 +340,10 @@ function saveToDatabase() {
 }
 
 function retrieveFromDatabase() {
-    var ref = firebase.database().ref();
+    var ref = firebase.database().ref("users");
     ref.once("value").then(function (snapshot) {
-            var dbUsers = snapshot.val().users;
+            var dbUsers = snapshot.val();
+            console.log(dbUsers);
             if (dbUsers) {
                 var dbUser = dbUsers.find(function (each) {
                     return each.name == user.name;
@@ -347,7 +352,7 @@ function retrieveFromDatabase() {
                     dbUser.vacations.forEach(function (dbVacation) {
                         var vacation = new Vacation(dbVacation.location, dbVacation.location, []);
                         dbVacation.activities.forEach(function (dbActivity) {
-                            var activity = new Activity(dbActivity.location, dbActivity.date, dbActivity.description, dbActivity.completed);
+                            var activity = new Activity(dbActivity.location, dbActivity.date, dbActivity.time, dbActivity.description, dbActivity.completed);
                             vacation.addActivity(activity);
                         });
                         user.addVacation(vacation);
@@ -370,10 +375,11 @@ function retrieveFromDatabase() {
 $("#add-button").on("click", function (event) {
     event.preventDefault();
     var dateEntry = $("#date").val().trim();
+    var timeEntry = $("#time").val().trim();
     var activityEntry = $("#activity").val().trim();
-    if ((dateEntry != "") && (activityEntry != "") && (user.selectedVacation)) {
+    if ((dateEntry != "") && (activityEntry != "" && (timeEntry != "")) && (user.selectedVacation)) {
 
-        var activity = new Activity(user.selectedVacation.location, dateEntry, activityEntry, false);
+        var activity = new Activity(user.selectedVacation.location, dateEntry, timeEntry, activityEntry, false);
         user.selectedVacation.addActivity(activity);
 
         showActivities(user.selectedVacation.activities);
@@ -426,3 +432,5 @@ function mapSetCenter() {
         mapSetCenter();
     }
 }
+
+// retrieveFromDatabase()
