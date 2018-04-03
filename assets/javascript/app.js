@@ -343,19 +343,21 @@ function retrieveFromDatabase() {
                 var dbUser = dbUsers.find(function (each) {
                     return each.name == user.name;
                 });
-                dbUser.vacations.forEach(function (dbVacation) {
-                    var vacation = new Vacation(dbVacation.location, dbVacation.location, []);
-                    dbVacation.activities.forEach(function (dbActivity) {
-                        var activity = new Activity(dbActivity.location, dbActivity.date, dbActivity.description, dbActivity.completed);
-                        vacation.addActivity(activity);
+                if (dbUser) {
+                    dbUser.vacations.forEach(function (dbVacation) {
+                        var vacation = new Vacation(dbVacation.location, dbVacation.location, []);
+                        dbVacation.activities.forEach(function (dbActivity) {
+                            var activity = new Activity(dbActivity.location, dbActivity.date, dbActivity.description, dbActivity.completed);
+                            vacation.addActivity(activity);
+                        });
+                        user.addVacation(vacation);
                     });
-                    user.addVacation(vacation);
-                });
-                console.log(dbUser);
-                user.selectedVacation = user.vacations[0];
-                displayCityButtons();
-                updateDisplay();
-                console.log(user);
+                    console.log(dbUser);
+                    user.selectedVacation = user.vacations[0];
+                    displayCityButtons();
+                    updateDisplay();
+                    console.log(user);
+                }
             }
         },
         function (errorObject) {
