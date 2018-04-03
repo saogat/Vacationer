@@ -181,6 +181,7 @@ function showActivities(activities) {
     var toDoDiv = $("#to-do-list");
     var timeButtons = $("#time-buttons");
     dateButtons.empty();
+    timeButtons.empty();
     toDoDiv.empty();
 
     var i = 0;
