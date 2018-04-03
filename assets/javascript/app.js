@@ -1,6 +1,7 @@
 var geoLocation;
 var map;
 var newCity;
+var dbUserRef;
 
 // Initialize Firebase
 var config = {
@@ -337,7 +338,14 @@ $("#city-input").on("keyup", function (event) {
 });
 
 function saveToDatabase() {
-    database.ref("users").push(user.databaseObject());
+
+    if (dbUserRef) {
+        // dbUserRef.upadate(user.databaseObject());
+        removeDbUser();
+    };
+
+    firebase.database().ref('users').push(user.databaseObject());
+
 }
 
 // function saveToDatabase() {
@@ -348,18 +356,20 @@ function saveToDatabase() {
 
 function retrieveFromDatabase() {
     var ref = firebase.database().ref("users");
-    ref.on("value", function (snapshot) {
+
+    ref.once("value", function (snapshot) {
         var dbUsers = [];
         snapshot.forEach(function (childSnapshot) {
-            dbUsers.push(childSnapshot.val());
+            dbUsers.push(childSnapshot);
         });
         // console.log(dbUsers);
         if (dbUsers) {
-            var dbUser = dbUsers.find(function (each) {
-                return each.name == user.name;
+            var dbUserS = dbUsers.find(function (each) {
+                return each.val().name == user.name;
             });
 
-            if (dbUser) {
+            if (dbUserS) {
+                var dbUser = dbUserS.val();
                 if (dbUser.vacations) {
                     dbUser.vacations.forEach(function (dbVacation) {
                         var vacation = new Vacation(dbVacation.location, dbVacation.location, []);
@@ -375,10 +385,25 @@ function retrieveFromDatabase() {
                     displayCityButtons();
                     updateDisplay();
                 }
+
+
+                dbUserRef = dbUserS.ref;
+
+
             }
         }
     })
 
+}
+
+function removeDbUser() {
+    dbUserRef.remove()
+        .then(function () {
+            console.log("Remove succeeded.")
+        })
+        .catch(function (error) {
+            console.log("Remove failed: " + error.message)
+        });
 }
 
 //Create click event function for activity entry form
@@ -442,3 +467,5 @@ function mapSetCenter() {
         mapSetCenter();
     }
 }
+
+retrieveFromDatabase();
