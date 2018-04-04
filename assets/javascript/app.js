@@ -37,15 +37,6 @@ function Vacationer(name, email, vacations = [], selectedVacation) {
             this.selectedVacation = null
         };
     }
-    this.databaseObject = function () {
-        var tempUser = {};
-        tempUser.name = this.name;
-        tempUser.email = this.email;
-        tempUser.vacations = $.map(this.vacations, function (vacation) {
-            return vacation.databaseObject();
-        });
-        return tempUser;
-    }
 }
 
 //Vacation contructor
@@ -59,14 +50,6 @@ function Vacation(name, location, weatherData) {
         },
         this.deleteActivity = function (index) {
             this.activities.splice(index, 1);
-        },
-        this.databaseObject = function () {
-            var tempVacation = {};
-            tempVacation.location = this.location;
-            tempVacation.activities = $.map(this.activities, function (activity) {
-                return activity.databaseObject();
-            });
-            return tempVacation;
         }
 };
 
@@ -76,38 +59,22 @@ function Activity(location, date, time, description, completed = false) {
         this.date = date,
         this.time = time,
         this.description = description,
-        this.completed = completed,
-        this.databaseObject = function () {
-            tempActivity = {};
-            tempActivity.location = this.location;
-            tempActivity.date = this.date;
-            tempActivity.time = this.time;
-            tempActivity.description = this.description;
-            tempActivity.completed = this.completed;
-            return tempActivity;
-        }
+        this.completed = completed
 }
 
 //Vacationers constructor
-function Vacationers(users = []) {
-    this.users = users;
-    this.addUser = function (user) {
-        this.users.push(user);
-    }
-    this.databaseObject = function () {
-        var tempVacationers = {};
-        tempVacationers.users = $.map(this.users, function (user) {
-            return user.databaseObject();
-        });
-        return tempVacationers;
-    }
-}
+// function Vacationers(users = []) {
+//     this.users = users;
+//     this.addUser = function (user) {
+//         this.users.push(user);
+//     }
+// }
 
 //new Vacationer with name guest
 var user = new Vacationer("guest", "guest@test.com");
-var vacationers = new Vacationers();
-vacationers.addUser(user);
-var users = vacationers.databaseObject().users;
+// var vacationers = new Vacationers();
+// vacationers.addUser(user);
+// var users = vacationers.databaseObject().users;
 
 //Google signon
 function onSignIn(googleUser) {
