@@ -1,4 +1,5 @@
 /* Nav */
+
 .nav-extended {
   background-image: url(../images/beach2.jpg);
   background-position: center;
@@ -7,20 +8,27 @@
   text-shadow: 0 1px 3px rgba(1, 0, 0, 5);
   color: white;
 }
-.nav-extended, li {
+
+.nav-extended,
+li {
   color: white;
 }
+
 #directions {
   text-align: center;
 }
+
 /* Nav...where added cities go */
+
 .nav-content {
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
-.center, #city-input {
+
+.center,
+#city-input {
   height: 1.6em;
   border: none;
   color: black;
@@ -32,6 +40,7 @@
   align-items: center;
   margin-top: 4%;
 }
+
 #city-input {
   background-color: white;
   width: 30%;
@@ -39,28 +48,36 @@
   margin-right: auto;
   color: black;
 }
+
 /* Logo */
+
 .brand-logo {
   float: left;
   margin-left: 2%;
   text-shadow: 0 1px 3px rgba(1, 0, 0, 9);
   margin-top: 1%;
 }
+
 /* Google Signin */
+
 .g-signin2 {
   width: auto;
   text-shadow: none;
 }
+
 #signon-id {
   /* top: 20px; */
   display: none;
 }
+
 /* .profile {
   margin-top: 10px;
   /* margin-right: 10px; */
+
 /* }  */
 
 /* ??????????????????? */
+
 .user {
   width: 100%;
   height: 100%;
@@ -73,18 +90,21 @@
   float: left;
   float: right:
 }
+
 /* Itinerary */
+
 #main-row {
   /* display: inline-flex; */
   background-image: url(../images/passport.jpg);
   background-size: cover;
   background-position: center;
   width: 80%;
-  object-fit:contain;
+  object-fit: contain;
   padding: 0;
   margin-left: auto;
   margin-right: auto;
 }
+
 #panel-1 {
   background-color: lightgoldenrodyellow;
   padding: 20px;
@@ -93,55 +113,58 @@
   width: 100%;
   margin: 20px;
 }
+
 /* Middle Section */
+
 #panel-2 {
   width: 100%;
   margin-left: 20px;
 }
+
 #date-header {
   color: black;
   font-size: 20px;
   right: -10;
 }
+
 #time-header {
   color: black;
   font-size: 20px;
 }
+
 #activity-header {
   color: black;
   font-size: 20px;
   border-bottom: #414141;
 }
+
 #activity-header p {
   text-align: left;
 }
+
 #panel-3 {
   width: 100%;
   margin-right: -15px;
-  /* position: absolute;
-  right: 0px; */
 }
 
 #photo-feed {
-  overflow:hidden;
+  overflow: hidden;
   object-fit: contain;
 }
-/* What is this??? */
-/* #city-pic{ 
-  object-fit: contain;
-  height: 400px;
-  width: auto;
-  max-height: 400px;
-} */
+
 /* API Section */
+
 #api-pics {
   margin-left: auto;
   margin-right: auto;
 }
+
 /* Footer Section */
+
 .footer {
   background-color: #414141;
 }
+
 .page-footer {
   background-color: #414141;
   font-size: .7em;
@@ -154,112 +177,101 @@
 ul li:hover {
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 /* X Delete option in menu bar */
+
 .close {
-    cursor: pointer;
-    /* top: 50%; */
-    right: 0%;
-    /* padding: 12px 5px; */
-    /* transform: translate(0%, -50%); */
-    font-size: 1em;
-    font-weight: lighter;
-    /* vertical-align: top; */
-    text-align: center;
-    background: none;
-    border: none;
-    color: white;
-    float: left;
-}
-.close {
-  cursor: pointer;
-  /* top: 50%;
-  right: 0%; */
-  padding: 12px 5px;
-  transform: translate(0%, -50%);
+  right: 0%;
   font-size: 1em;
   font-weight: lighter;
+  text-align: center;
+  background: none;
+  border: none;
+  color: white;
+  float: left;
+  cursor: pointer;
+  padding: 12px 5px;
+  transform: translate(0%, -50%);
   vertical-align: top;
- }
-.a-tag{
-  float:left;
+}
+
+.a-tag {
+  float: left;
   background-color: transparent;
   border: none;
   color: white;
   padding-top: 5px;
 }
-.tabs li {
+
+.city-tabs li {
   padding: 0 10px 0 10px;
   margin-top: -10px;
   border-right-style: solid;
   border-right-width: .01px;
   color: rgba(255, 255, 255, 0.2);
 }
-.tabs li:last-child {
+
+.city-tabs li:last-child {
   border-right: none;
 }
 
-
-.tabs .tab a {
+.city-tabs .tab a {
   color: white;
-} 
+}
+
 .city-div {
   margin-top: 10px;
   margin-right: 20px;
 }
-/* .connectedo591rl1cb7ta {
-  text-shadow: none;
-  align-content: center;
-  align-items: center;
-  
-} */
+
 /*********************************** OpenWeather API styling ******************************************/
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300');
 .city {
-    position: absolute;
-    top: 12px;
-    left: 25px;
-    background: none;
-    color: #fff;
-    font-size: 3em;
+  position: absolute;
+  top: 12px;
+  left: 25px;
+  background: none;
+  color: #fff;
+  font-size: 3em;
 }
 
 .description {
-    position: absolute;
-    top: 67px;
-    left: 25px;
-    background: none;
-    color: #fff;
-    font-size: 1.3em;
+  position: absolute;
+  top: 67px;
+  left: 25px;
+  background: none;
+  color: #fff;
+  font-size: 1.3em;
 }
 
 .weatherData {
-    color: #fff;
-    position: absolute;
-    top: 25%;
-    left: 3%;
-    font-size: 2em;
+  color: #fff;
+  position: absolute;
+  top: 25%;
+  left: 3%;
+  font-size: 2em;
 }
 
-.humidityIcon{
-    width:20px;
-    float: left;
-    margin: 3px;
+.humidityIcon {
+  width: 20px;
+  float: left;
+  margin: 3px;
 }
 
 .currentWeather {
-    position: absolute;
-    top: 18%;
-    left: 20%;
-    width: 70%;
+  position: absolute;
+  top: 18%;
+  left: 20%;
+  width: 70%;
 }
 
 .temp {
-    color: #fff;
-    position: absolute;
-    top: 0px;
-    right: 5%;
-    font-size: 4.5em;
+  color: #fff;
+  position: absolute;
+  top: 0px;
+  right: 5%;
+  font-size: 4.5em;
 }
 
 .day {
@@ -383,6 +395,7 @@ ul li:hover {
 }
 
 /*********************************** google map styling ******************************************/
+
 /* .socialitem ul {
 		list-style: none;
 		margin: 0;
