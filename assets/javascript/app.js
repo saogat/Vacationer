@@ -114,7 +114,7 @@ function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
     var userDiv = $(".user");
     var userImage = $("<img>").attr("src", profile.getImageUrl());
-    var userName = $("<p>").text(profile.getName());
+    var userName = $("<p>").attr("id", "signon-id").text(profile.getName());
     userDiv.empty();
     userDiv.append(userImage);
     userDiv.append(userName);
