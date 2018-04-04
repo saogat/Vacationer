@@ -114,7 +114,7 @@ function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
     var userDiv = $(".user");
     var userImage = $("<img>").attr("src", profile.getImageUrl());
-    var userName = $("<p>").text(profile.getName());
+    var userName = $("<p>").attr("id", "signon-id").text(profile.getName());
     userDiv.empty();
     userDiv.append(userImage);
     userDiv.append(userName);
@@ -334,11 +334,10 @@ $("#city-input").on("keyup", function (event) {
 });
 
 function saveToDatabase() {
-
     if (dbUserRef) {
         removeDbUser();
     };
-    firebase.database().ref('users').push(user.databaseObject());
+    dbUserRef = firebase.database().ref('users').push(user.databaseObject());
 }
 
 function retrieveFromDatabase() {
@@ -449,3 +448,5 @@ function mapSetCenter() {
         mapSetCenter();
     }
 }
+
+retrieveFromDatabase();
