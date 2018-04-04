@@ -52,7 +52,8 @@
   text-shadow: none;
 }
 #signon-id {
-  top: 20px;
+  /* top: 20px; */
+  display: none;
 }
 /* .profile {
   margin-top: 10px;
@@ -90,15 +91,17 @@
   object-fit: cover;
   height: auto;
   width: 100%;
-  margin-left: -15px;
+  margin: 20px;
 }
 /* Middle Section */
 #panel-2 {
   width: 100%;
+  margin-left: 20px;
 }
 #date-header {
   color: black;
   font-size: 20px;
+  right: -10;
 }
 #time-header {
   color: black;
@@ -380,3 +383,18 @@ ul li:hover {
 }
 
 /*********************************** google map styling ******************************************/
+/* .socialitem ul {
+		list-style: none;
+		margin: 0;
+    padding: 0;
+
+}
+.socialitem li {
+      vertical-align:  middle;
+}
+.socialitem a {
+				display: inline;
+				font-size: 1.4em;
+				margin: 0 5px;
+				text-decoration: none;
+} */
