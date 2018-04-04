@@ -136,13 +136,18 @@ function showActivities(activities) {
     timeButtons.empty();
     toDoDiv.empty();
 
+    var randomDate = "02-23-1999";
+    var randomFormat = "MM/DD/YYYY";
+    var convertedDate = moment(randomDate, randomFormat);
+
     var i = 0;
     activities.forEach(function (activity) {
 
         //show activity date and time
         var date = activity.date;
-        var format = "MM/DD/YYYY";
-        var convertedDate = moment(date, date);
+        console.log("date " + date);
+        var format = "YYYY-MM-DD";
+        var convertedDate = moment(date, format);
 
         var dateDiv = $("<div>");
         dateDiv.append($("<p>").text(moment(convertedDate).format("MM/DD/YY")));
