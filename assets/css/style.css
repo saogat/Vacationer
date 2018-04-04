@@ -55,12 +55,7 @@
   /* top: 20px; */
   display: none;
 }
-/* .profile {
-  margin-top: 10px;
-  /* margin-right: 10px; */
-/* }  */
 
-/* ??????????????????? */
 .user {
   width: 100%;
   height: 100%;
@@ -71,7 +66,7 @@
   width: 80%;
   max-width: 980px;
   float: left;
-  float: right:
+  float: right;
 }
 /* Itinerary */
 #main-row {
@@ -118,21 +113,13 @@
 #panel-3 {
   width: 100%;
   margin-right: -15px;
-  /* position: absolute;
-  right: 0px; */
-}
+  }
 
 #photo-feed {
   overflow:hidden;
   object-fit: contain;
 }
-/* What is this??? */
-/* #city-pic{ 
-  object-fit: contain;
-  height: 400px;
-  width: auto;
-  max-height: 400px;
-} */
+
 /* API Section */
 #api-pics {
   margin-left: auto;
@@ -206,12 +193,7 @@ ul li:hover {
   margin-top: 10px;
   margin-right: 20px;
 }
-/* .connectedo591rl1cb7ta {
-  text-shadow: none;
-  align-content: center;
-  align-items: center;
-  
-} */
+
 /*********************************** OpenWeather API styling ******************************************/
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300');
@@ -381,20 +363,3 @@ ul li:hover {
   margin-right: auto;
   margin-bottom: 10px;
 }
-
-/*********************************** google map styling ******************************************/
-/* .socialitem ul {
-		list-style: none;
-		margin: 0;
-    padding: 0;
-
-}
-.socialitem li {
-      vertical-align:  middle;
-}
-.socialitem a {
-				display: inline;
-				font-size: 1.4em;
-				margin: 0 5px;
-				text-decoration: none;
-} */
