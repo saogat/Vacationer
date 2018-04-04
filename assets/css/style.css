@@ -10,11 +10,11 @@
   background-color: lightgoldenrodyellow;
   padding-top: 20px;
   padding-bottom: 30px;
-  margin-left: 20px;
+  /* margin-left: 20px; */
   object-fit: cover;
-  height: 100%;
-  width: auto;
-  max-width: 350px;
+  height: auto;
+  width: 25%;
+  /* max-width: 350px; */
 }
 
 .nav-extended {
@@ -72,10 +72,10 @@
 
 #main-row {
   background-image: url(../images/passport.jpg);
-  /* background-size: cover; */
+  background-size: cover;
   background-position: center;
-  /* position: relative; */
-  margin-left: 20px;
+  position: relative;
+width: 100%;
   
 }
 
@@ -102,18 +102,21 @@
 }
 
 #photo-feed {
-  background-color: white;
-  height: 32%;
+  /* background-color: white; */
+  /* height: auto; */
   position: absolute;
   right: 0px;
-  overflow: auto;
-  object-fit: cover;
+  overflow:hidden;
+  object-fit: contain;
+  width: 25%;
+  height: 400px;
 }
 
 #city-pic{
-  object-fit: cover;
-  height: 100%;
+  object-fit: contain;
+  height: 400px;
   width: auto;
+  max-height: 400px;
 }
 
 #api-pics {
@@ -201,10 +204,10 @@ ul li:hover {
 .tabs .tab a {
   color: white;
 } 
-.city-div {
+/* .city-div {
   margin-top: 10px;
   margin-right: 20px;
-}
+} */
 .connectedo591rl1cb7ta {
   text-shadow: none;
   align-content: center;

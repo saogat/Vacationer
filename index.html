@@ -68,44 +68,47 @@
         </div>
     </nav>
     <!--Main page-->
-    <div class="row" id="main-row">
-        <!--Add activities input box-->
-        <div class="col s2" id="panel">
-            <form>
-                <p>Add to your itinerary</p>
-                <input type="date" class="datepicker" id="date" placeholder="Date" required>
-                <input type="time" class="timepicker" id="time" placeholder="Time" required>
-                <input type="text" id="activity" placeholder="Activity" required>
-                <button id="add-button">Add</button>
-            </form>
-        </div>
-        <div class="container">
-            <!--Dates list-->
-            <div class="col s2" id="days">
-                <div id="date-header">
-                    <p>Date</p>
+    <div class="container">
+        <div class="row" id="main-row">
+            <!--Add activities input box-->
+            <div class="col s2" id="panel">
+                <form>
+                    <p>Add to your itinerary</p>
+                    <input type="date" class="datepicker" id="date" placeholder="Date" required>
+                    <input type="time" class="timepicker" id="time" placeholder="Time" required>
+                    <input type="text" id="activity" placeholder="Activity" required>
+                    <button id="add-button">Add</button>
+                </form>
+            </div>
+            
+                <!--Dates list-->
+            <div class="mid">   
+                <div class="col s2" id="days">
+                    <div id="date-header">
+                        <p>Date</p>
+                    </div>
+                    <div id="date-buttons"></div>
                 </div>
-                <div id="date-buttons"></div>
-            </div>
 
-            <!--Times list-->
-            <div class="col s2" id="times">
-                <div id="time-header">
-                    <p>Time</p>
+                <!--Times list-->
+                <div class="col s2" id="times">
+                    <div id="time-header">
+                        <p>Time</p>
+                    </div>
+                    <div id="time-buttons"></div>
                 </div>
-                <div id="time-buttons"></div>
-            </div>
 
-            <!--To do list-->
-            <div class="col s3" id="to-do-panel">
-                <div id="activity-header">
-                    <p>Activity</p>
-                </div>  
-                <div id="to-do-list"></div>
+                <!--To do list-->
+                <div class="col s3" id="to-do-panel">
+                    <div id="activity-header">
+                        <p>Activity</p>
+                    </div>  
+                    <div id="to-do-list"></div>
+                </div>
             </div>
-        </div>
-        <!--Div to hold photo-->
-        <div class="col s3" id="photo-feed"></div>
+            <!--Div to hold photo-->
+            <div class="col s3" id="photo-feed"></div>
+         </div>
     </div>
 
     <div class="divider"></div>
