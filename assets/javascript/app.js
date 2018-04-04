@@ -17,9 +17,7 @@ firebase.initializeApp(config);
 // Get a reference to the database service
 var database = firebase.database();
 
-
 //Domain objects
-
 //Vacationer constructor
 function Vacationer(name, email, vacations = [], selectedVacation) {
     this.vacations = vacations;
@@ -275,10 +273,10 @@ var getWeather = function (vacation) {
                     eachWeatherData.weather[0].description,
                     getImageToDisplay(eachWeatherData)
                 );
-                console.log(weather);
+                // console.log(weather);
                 weatherData.push(weather);
             };
-            console.log(weather);
+            // console.log(weather);
             vacation.weatherData = weatherData;
             renderWeatherData(user.selectedVacation);
         });
@@ -359,7 +357,7 @@ function retrieveFromDatabase() {
 
             if (dbUserS) {
                 var dbUser = dbUserS.val();
-                console.log(dbUser);
+                // console.log(dbUser);
                 if (dbUser.vacations) {
                     dbUser.vacations.forEach(function (dbVacation) {
                         var vacation = new Vacation(dbVacation.location, dbVacation.location, []);
@@ -374,6 +372,7 @@ function retrieveFromDatabase() {
                     user.selectedVacation = user.vacations[0];
                     displayCityButtons();
                     updateDisplay();
+                    console.log(user);
                 }
                 dbUserRef = dbUserS.ref;
             }
@@ -385,10 +384,10 @@ function retrieveFromDatabase() {
 function removeDbUser() {
     dbUserRef.remove()
         .then(function () {
-            console.log("Remove succeeded.")
+            return true;
         })
         .catch(function (error) {
-            console.log("Remove failed: " + error.message)
+            return false;
         });
 }
 
@@ -452,5 +451,3 @@ function mapSetCenter() {
         mapSetCenter();
     }
 }
-
-retrieveFromDatabase();
