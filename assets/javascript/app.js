@@ -104,7 +104,7 @@ function Vacationers(users = []) {
 }
 
 //new Vacationer with name guest
-var user = new Vacationer("guest", "test@test.com");
+var user = new Vacationer("guest", "guest@test.com");
 var vacationers = new Vacationers();
 vacationers.addUser(user);
 var users = vacationers.databaseObject().users;
@@ -338,8 +338,8 @@ function saveToDatabase() {
     if (dbUserRef) {
         removeDbUser();
     };
-    dbUserRef = firebase.database().ref('users').push(user.databaseObject());
-}
+    dbUserRef = firebase.database().ref('users').push(JSON.parse(JSON.stringify(user)));
+  }
 
 function retrieveFromDatabase() {
     var ref = firebase.database().ref("users");
