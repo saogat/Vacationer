@@ -62,8 +62,19 @@ function Activity(location, date, time, description, completed = false) {
         this.completed = completed
 }
 
+//Vacationers constructor
+// function Vacationers(users = []) {
+//     this.users = users;
+//     this.addUser = function (user) {
+//         this.users.push(user);
+//     }
+// }
+
 //new Vacationer with name guest
 var user = new Vacationer("guest", "guest@test.com");
+// var vacationers = new Vacationers();
+// vacationers.addUser(user);
+// var users = vacationers.databaseObject().users;
 
 //Google signon
 function onSignIn(googleUser) {
@@ -92,7 +103,7 @@ function displayCityButtons() {
     //Click handler for physical button (Can delete when enter key works)
     //   $("#vacation-adder").on("click", function (event) {
     //     event.preventDefault();
-    var tabsDiv = $(".city-tabs");
+    var tabsDiv = $(".tabs");
     tabsDiv.empty();
     user.vacations.forEach(function (vacation) {
         var newCity = vacation.location;
@@ -140,12 +151,8 @@ function showActivities(activities) {
     activities.forEach(function (activity) {
 
         //show activity date and time
-        var date = activity.date;
-        var format = "MM/DD/YYYY";
-        var convertedDate = moment(date, date);
-
         var dateDiv = $("<div>");
-        dateDiv.append($("<p>").text(moment(convertedDate).format("MM/DD/YY")));
+        dateDiv.append($("<p>").text(activity.date));
         dateButtons.append(dateDiv);
 
         //show activity time
@@ -265,50 +272,31 @@ function updateDisplay() {
     }
 }
 
-//validate input value
-function alphaChars(textInput) {
-    if (textInput.length != 0) {
-        for (var i = 0; i < textInput.length; i++) {
-            var chrs = textInput.charAt(i);
-            if ((chrs < "A" || chrs > "Z") && (chrs < "a" || chrs > "z")) {
-                return false;
-            }
-            else{ return true}
-        }
-    } else {
-        return false;
-    }
-}
-
 //Create click event function for city input bar
-//Execute a function when the user releases a key on the keyboard
+// Execute a function when the user releases a key on the keyboard
 $("#city-input").on("keyup", function (event) {
     // Cancel the default action, if needed
     event.preventDefault();
 
     // Number 13 is the "Enter" key on the keyboard
     if (event.keyCode === 13) {
+        // Trigger the button element with a click
+        $("#vacation-adder").click();
+
+        //Get the vacation city
         var cityInput = $("#city-input");
         newCity = cityInput.val().trim();
 
-        if (alphaChars(newCity)) {
-            // Trigger the button element with a click
-            $("#vacation-adder").click();
+        //Create new Vacation instance based on newCity
+        var vacation = new Vacation(newCity, newCity, []);
+        user.addVacation(vacation);
+        user.selectedVacation = vacation;
 
-            //Get the vacation city
-            newCity = cityInput.val().trim();
+        displayCityButtons();
+        updateDisplay();
 
-            //Create new Vacation instance based on newCity
-            var vacation = new Vacation(newCity, newCity, []);
-            user.addVacation(vacation);
-            user.selectedVacation = vacation;
-
-            displayCityButtons();
-            updateDisplay();
-
-            //clear city-input
-            $("#city-input").val("");
-        }
+        //clear city-input
+        $("#city-input").val("");
 
     }
 });
@@ -318,7 +306,7 @@ function saveToDatabase() {
         removeDbUser();
     };
     dbUserRef = firebase.database().ref('users').push(JSON.parse(JSON.stringify(user)));
-}
+  }
 
 function retrieveFromDatabase() {
     var ref = firebase.database().ref("users");
@@ -412,9 +400,8 @@ function geoCoding(city) {
     });
 }
 
-
 //select a vacation city
-$(".city-tabs").on("click", "button", function (event) {
+$(".tabs").on("click", "button", function (event) {
     event.preventDefault();
     var city = $(this).text();
     user.selectedVacation = user.vacations.find(function (each) {
