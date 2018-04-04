@@ -17,13 +17,12 @@ firebase.initializeApp(config);
 // Get a reference to the database service
 var database = firebase.database();
 
-
 //Domain objects
-
 //Vacationer constructor
-function Vacationer(name, vacations = [], selectedVacation) {
+function Vacationer(name, email, vacations = [], selectedVacation) {
     this.vacations = vacations;
     this.name = name;
+    this.email = email;
     this.selectedVacation = selectedVacation;
     this.addVacation = function (vacation) {
         this.vacations.push(vacation);
@@ -41,6 +40,7 @@ function Vacationer(name, vacations = [], selectedVacation) {
     this.databaseObject = function () {
         var tempUser = {};
         tempUser.name = this.name;
+        tempUser.email = this.email;
         tempUser.vacations = $.map(this.vacations, function (vacation) {
             return vacation.databaseObject();
         });
@@ -104,7 +104,7 @@ function Vacationers(users = []) {
 }
 
 //new Vacationer with name guest
-var user = new Vacationer("guest");
+var user = new Vacationer("guest", "test@test.com");
 var vacationers = new Vacationers();
 vacationers.addUser(user);
 var users = vacationers.databaseObject().users;
@@ -121,6 +121,7 @@ function onSignIn(googleUser) {
 
     //set name on Vacationer
     user.name = profile.getName();
+    user.email = profile.getEmail();
     retrieveFromDatabase();
 }
 
@@ -272,10 +273,10 @@ var getWeather = function (vacation) {
                     eachWeatherData.weather[0].description,
                     getImageToDisplay(eachWeatherData)
                 );
-                console.log(weather);
+                // console.log(weather);
                 weatherData.push(weather);
             };
-            console.log(weather);
+            // console.log(weather);
             vacation.weatherData = weatherData;
             renderWeatherData(user.selectedVacation);
         });
@@ -334,11 +335,10 @@ $("#city-input").on("keyup", function (event) {
 });
 
 function saveToDatabase() {
-
     if (dbUserRef) {
         removeDbUser();
     };
-    firebase.database().ref('users').push(user.databaseObject());
+    dbUserRef = firebase.database().ref('users').push(user.databaseObject());
 }
 
 function retrieveFromDatabase() {
@@ -352,11 +352,12 @@ function retrieveFromDatabase() {
         // console.log(dbUsers);
         if (dbUsers) {
             var dbUserS = dbUsers.find(function (each) {
-                return each.val().name == user.name;
+                return each.val().email == user.email;
             });
 
             if (dbUserS) {
                 var dbUser = dbUserS.val();
+                // console.log(dbUser);
                 if (dbUser.vacations) {
                     dbUser.vacations.forEach(function (dbVacation) {
                         var vacation = new Vacation(dbVacation.location, dbVacation.location, []);
@@ -371,6 +372,7 @@ function retrieveFromDatabase() {
                     user.selectedVacation = user.vacations[0];
                     displayCityButtons();
                     updateDisplay();
+                    console.log(user);
                 }
                 dbUserRef = dbUserS.ref;
             }
@@ -382,10 +384,10 @@ function retrieveFromDatabase() {
 function removeDbUser() {
     dbUserRef.remove()
         .then(function () {
-            console.log("Remove succeeded.")
+            return true;
         })
         .catch(function (error) {
-            console.log("Remove failed: " + error.message)
+            return false;
         });
 }
 
