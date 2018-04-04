@@ -334,11 +334,10 @@ $("#city-input").on("keyup", function (event) {
 });
 
 function saveToDatabase() {
-
     if (dbUserRef) {
         removeDbUser();
     };
-    firebase.database().ref('users').push(user.databaseObject());
+    dbUserRef = firebase.database().ref('users').push(user.databaseObject());
 }
 
 function retrieveFromDatabase() {
@@ -449,3 +448,5 @@ function mapSetCenter() {
         mapSetCenter();
     }
 }
+
+retrieveFromDatabase();
