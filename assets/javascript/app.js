@@ -21,9 +21,10 @@ var database = firebase.database();
 //Domain objects
 
 //Vacationer constructor
-function Vacationer(name, vacations = [], selectedVacation) {
+function Vacationer(name, email, vacations = [], selectedVacation) {
     this.vacations = vacations;
     this.name = name;
+    this.email = email;
     this.selectedVacation = selectedVacation;
     this.addVacation = function (vacation) {
         this.vacations.push(vacation);
@@ -41,6 +42,7 @@ function Vacationer(name, vacations = [], selectedVacation) {
     this.databaseObject = function () {
         var tempUser = {};
         tempUser.name = this.name;
+        tempUser.email = this.email;
         tempUser.vacations = $.map(this.vacations, function (vacation) {
             return vacation.databaseObject();
         });
@@ -104,7 +106,7 @@ function Vacationers(users = []) {
 }
 
 //new Vacationer with name guest
-var user = new Vacationer("guest");
+var user = new Vacationer("guest", "test@test.com");
 var vacationers = new Vacationers();
 vacationers.addUser(user);
 var users = vacationers.databaseObject().users;
@@ -121,6 +123,7 @@ function onSignIn(googleUser) {
 
     //set name on Vacationer
     user.name = profile.getName();
+    user.email = profile.getEmail();
     retrieveFromDatabase();
 }
 
@@ -351,11 +354,12 @@ function retrieveFromDatabase() {
         // console.log(dbUsers);
         if (dbUsers) {
             var dbUserS = dbUsers.find(function (each) {
-                return each.val().name == user.name;
+                return each.val().email == user.email;
             });
 
             if (dbUserS) {
                 var dbUser = dbUserS.val();
+                console.log(dbUser);
                 if (dbUser.vacations) {
                     dbUser.vacations.forEach(function (dbVacation) {
                         var vacation = new Vacation(dbVacation.location, dbVacation.location, []);
