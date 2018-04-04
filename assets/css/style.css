@@ -70,14 +70,6 @@ li {
   display: none;
 }
 
-/* .profile {
-  margin-top: 10px;
-  /* margin-right: 10px; */
-
-/* }  */
-
-/* ??????????????????? */
-
 .user {
   width: 100%;
   height: 100%;
@@ -393,21 +385,3 @@ ul li:hover {
   margin-right: auto;
   margin-bottom: 10px;
 }
-
-/*********************************** google map styling ******************************************/
-
-/* .socialitem ul {
-		list-style: none;
-		margin: 0;
-    padding: 0;
-
-}
-.socialitem li {
-      vertical-align:  middle;
-}
-.socialitem a {
-				display: inline;
-				font-size: 1.4em;
-				margin: 0 5px;
-				text-decoration: none;
-} */
